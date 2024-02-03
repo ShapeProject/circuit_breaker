@@ -1,0 +1,20 @@
+{
+  "name": "circuit_breaker",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/ShapeProject/circuit_breaker.git",
+  "author": "Haruki Kondo",
+  "license": "MIT",
+  "scripts": {
+    "frontend:build": "yarn workspace frontend build",
+    "frontend:dev": "yarn workspace frontend dev",
+    "backend:build": "yarn workspace backend compile",
+    "backend:test": "yarn workspace backend test",
+    "backend:deploy:scrollSepolia": "yarn workspace backend deploy:scrollSepolia",
+    "backend:verify:scrollSepolia": "yarn workspace backend verify:scrollSepolia"
+  },
+  "workspaces": [
+    "pkgs/*"
+  ]
+}

@@ -1,8 +1,9 @@
 import { Loader } from "@/components/loader"
+import { ethers } from "ethers"
 import { SmartAccountClient } from "permissionless"
 import { SmartAccount } from "permissionless/accounts"
 import { useState } from "react"
-import { Chain, Hash, Transport, zeroAddress } from "viem"
+import { Chain, Hash, Transport } from "viem"
 
 /**
  * send UserOp
@@ -21,9 +22,9 @@ export const DemoTransactionButton = ({
     const sendTransaction = async () => {
         setLoading(true)
         const txHash = await smartAccountClient.sendTransaction({
-            to: zeroAddress,
+            to: "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
             data: "0x",
-            value: BigInt(0)
+            value: ethers.parseEther("0.001"),
         })
         onSendTransaction(txHash)
         setLoading(false)

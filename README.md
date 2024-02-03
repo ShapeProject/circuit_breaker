@@ -44,3 +44,4 @@
 2. [GtiHub - particle-scroll-demo](https://github.com/TABASCOatw/particle-scroll-demo/tree/main)
 3. [StackUp - particle-demo](https://docs.stackup.sh/docs/particle-demo)
 4. [privy - Docs](https://docs.privy.io/)
+5. [Transaction Fees on Scroll](https://docs.scroll.io/en/developers/transaction-fees-on-scroll/)

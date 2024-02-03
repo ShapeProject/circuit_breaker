@@ -4,7 +4,7 @@ import { Loader } from "@/components/loader"
 import { Web3Auth } from "@web3auth/modal"
 import { Web3AuthConnector } from "@web3auth/web3auth-wagmi-connector"
 import { SmartAccountClient, createSmartAccountClient, walletClientToCustomSigner } from "permissionless"
-import { SmartAccount, signerToSafeSmartAccount } from "permissionless/accounts"
+import { SmartAccount, signerToSimpleSmartAccount } from "permissionless/accounts"
 import { createPimlicoPaymasterClient } from "permissionless/clients/pimlico"
 import { useCallback, useEffect, useState } from "react"
 import { Address, Chain, Hash, Transport, http } from "viem"
@@ -17,7 +17,7 @@ if (!process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID)
 // Create Web3Auth instance
 const web3authInstance = new Web3Auth({
     clientId: process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
-    web3AuthNetwork: "sapphire_devnet", // Web3Auth Network
+    web3AuthNetwork: "mainnet", // Web3Auth Network
     chainConfig: {
         chainNamespace: "eip155",
         chainId: "0x8274F",
@@ -69,18 +69,14 @@ export const Web3AuthFlow = () => {
     useEffect(() => {
         ;(async () => {
             if (isConnected && walletClient && publicClient) {
-                const customSigner = walletClientToCustomSigner(walletClient)
+                const customSigner = walletClientToCustomSigner(walletClient);
 
-                console.log("process.env.NEXT_PUBLIC_ENTRYPOINT", process.env.NEXT_PUBLIC_ENTRYPOINT)
-
-                const safeSmartAccountClient = await signerToSafeSmartAccount(
+                const safeSmartAccountClient = await signerToSimpleSmartAccount(
                     publicClient,
                     {
                         entryPoint: process.env.NEXT_PUBLIC_ENTRYPOINT! as Address,
                         signer: customSigner,
-                        safeVersion: "1.4.1",
-                        saltNonce: BigInt(0),
-                        safeProxyFactoryAddress: "0x000000a56Aaca3e9a4C479ea6b6CD0DbcB6634F5"
+                        factoryAddress: "0x9406Cc6185a346906296840746125a0E44976454"
                     }
                 )
 
@@ -103,10 +99,11 @@ export const Web3AuthFlow = () => {
     if (isConnected && smartAccountClient) {
         return (
             <div>
+                <>{console.log("address:", smartAccountClient.account.address)}</>
                 <div>
                     Smart contract wallet address:{" "}
                     <p className="fixed left-0 top-0 flex flex-col w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-                        <code>{smartAccountClient.account?.address}</code>
+                        <code>{smartAccountClient.account.address}</code>
                     </p>
                 </div>
                 <div className="flex gap-x-4">
@@ -125,7 +122,7 @@ export const Web3AuthFlow = () => {
                     <p className="mt-4">
                         Transaction hash:{" "}
                         <a
-                            href={`https://sepolia.etherscan.io/tx/${txHash}`}
+                            href={`https://sepolia.scrollscan.com/tx/${txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline"

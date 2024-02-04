@@ -14,8 +14,10 @@
     "script:verify:mock:scrollSepolia": "hardhat run scripts/mock/verify.ts --network scrollSepolia"
   },
   "dependencies": {
+    "@types/snarkjs": "^0.7.8",
     "dotenv": "^16.3.1",
-    "hardhat": "^2.17.3"
+    "hardhat": "^2.17.3",
+    "snarkjs": "0.6.10"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

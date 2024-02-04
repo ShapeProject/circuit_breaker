@@ -8,7 +8,10 @@
     "test": "hardhat test",
     "compile": "hardhat compile",
     "deploy:scrollSepolia": "hardhat run scripts/deploy.ts --network scrollSepolia",
-    "verify:scrollSepolia": "hardhat verify 0x67ADc29278d87D87b212C59fDffd2749fe7418c4 --network scrollSepolia  1695472571"
+    "verify:scrollSepolia": "hardhat verify 0x67ADc29278d87D87b212C59fDffd2749fe7418c4 --network scrollSepolia  1695472571",
+    "deploy:mock:scrollSepolia": "hardhat run scripts/mock/deploy.ts --network scrollSepolia",
+    "verify:mock:scrollSepolia": "hardhat verify 0xfFC2535688c5C053CF6E4C1B9452Fa14c092fe45 --network scrollSepolia",
+    "script:verify:mock:scrollSepolia": "hardhat run scripts/mock/verify.ts --network scrollSepolia"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

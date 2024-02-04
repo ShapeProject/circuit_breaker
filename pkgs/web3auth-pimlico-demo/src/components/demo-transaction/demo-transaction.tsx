@@ -24,7 +24,7 @@ export const DemoTransactionButton = ({
         const txHash = await smartAccountClient.sendTransaction({
             to: "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
             data: "0x",
-            value: ethers.parseEther("0.001"),
+            value: ethers.parseEther("0.0001"),
         })
         onSendTransaction(txHash)
         setLoading(false)

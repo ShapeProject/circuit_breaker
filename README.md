@@ -45,3 +45,4 @@
 3. [StackUp - particle-demo](https://docs.stackup.sh/docs/particle-demo)
 4. [privy - Docs](https://docs.privy.io/)
 5. [Transaction Fees on Scroll](https://docs.scroll.io/en/developers/transaction-fees-on-scroll/)
+6. [Particle Network Web SDK Demo.](https://github.com/Particle-Network/particle-web-demo)

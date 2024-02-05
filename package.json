@@ -16,7 +16,8 @@
     "backend:deploy:mock:scrollSepolia": "yarn workspace backend deploy:mock:scrollSepolia",
     "backend:script:verify:mock:scrollSepolia": "yarn workspace backend script:verify:mock:scrollSepolia",
     "smartwallet-demo:build": "yarn workspace smartwallet-demo build",
-    "smartwallet-demo:dev": "yarn workspace smartwallet-demo dev"
+    "smartwallet-demo:dev": "yarn workspace smartwallet-demo dev",
+    "catattacknft:dev": "yarn workspace catattacknft dev"
   },
   "workspaces": [
     "pkgs/*"

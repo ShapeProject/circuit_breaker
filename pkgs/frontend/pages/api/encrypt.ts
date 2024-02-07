@@ -1,12 +1,12 @@
 // pages/api/encrypt.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { writeFile } from 'fs/promises'; // Node.js 14以降で利用可能
+import { writeFile } from 'fs/promises';
 import path from 'path';
-import { initializeSeal } from '../../utils/sealInitialize'; // SEALの初期化関数を別ファイルに分離
+import { initializeSeal } from '../../utils/sealInitialize';
 
 type EncryptResponseData = {
-  cipherText1?: string; // 暗号文を文字列として返す
-  cipherText2?: string; // 暗号文を文字列として返す
+  cipherText1?: string;
+  cipherText2?: string;
   error?: string;
 }
 
@@ -22,21 +22,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const encodedNumber1 = batchEncoder.encode(Int32Array.from([number1]));
       const encodedNumber2 = batchEncoder.encode(Int32Array.from([number2]));
 
+      // 暗号文をBase64文字列として保存
       const cipherText1 = encryptor.encrypt(encodedNumber1);
       const cipherText2 = encryptor.encrypt(encodedNumber2);
-      const cipherTextBase64_1 = cipherText1.save(); // 暗号文をBase64文字列として保存
-      const cipherTextBase64_2 = cipherText2.save(); // 暗号文をBase64文字列として保存
-
-
-      // // テスト的に暗号文を復号化して数値を取得
-      // const decodedResult1 = decryptor.decrypt(cipherTextBase64_1);
-      // const decodedResult2 = decryptor.decrypt(cipherTextBase64_2);
-      // // console.log('decodedResult1:', decodedResult1);
-      // // console.log('decodedResult2:', decodedResult2);
-      // const result1 = batchEncoder.decode(decodedResult1);
-      // const result2 = batchEncoder.decode(decodedResult2);
-      // console.log('result1:', result1)
-      // console.log('result2:', result2)
+      const cipherTextBase64_1 = cipherText1.save();
+      const cipherTextBase64_2 = cipherText2.save();
 
       // ファイルに保存するパスを定義
       const filePath1 = path.join(process.cwd(), 'data', 'cipherText1.txt');

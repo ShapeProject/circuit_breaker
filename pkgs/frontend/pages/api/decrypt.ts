@@ -24,6 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       
       // 復号化
       const decodedResult = decryptor.decrypt(cipherTextLoad);
+      // decodedResultがvoidでないことを確認
+      if (!decodedResult) {
+          throw new Error('Decryption failed');
+      }
       const resultArray = batchEncoder.decode(decodedResult);
       const number = resultArray[0];
 

@@ -44,10 +44,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       // 2つの数値を暗号化
       const encodedNumber1 = batchEncoder.encode(Int32Array.from([number1]));
-      const cipherText1 = encryptor.encrypt(encodedNumber1);
-
       const encodedNumber2 = batchEncoder.encode(Int32Array.from([number2]));
+      
+      // 暗号文がvoidでないことを確認
+      if (!encodedNumber1 || !encodedNumber2) {
+        throw new Error('Encryption failed');
+      }   
+      const cipherText1 = encryptor.encrypt(encodedNumber1);
       const cipherText2 = encryptor.encrypt(encodedNumber2);
+      if (!cipherText1 || !cipherText2) {
+        throw new Error('Encryption failed');
+      }
 
       // 加算
       const cipherResult = seal.CipherText();
@@ -58,6 +65,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       // 復号
       const decodedResult = decryptor.decrypt(cipherResult);
+      if (!decodedResult) {
+        throw new Error('Decryption failed');
+      }
       console.log('decodedResult:', decodedResult);
       const result = batchEncoder.decode(decodedResult);
       console.log('result:', result);

@@ -21,10 +21,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       // 数値を暗号化
       const encodedNumber1 = batchEncoder.encode(Int32Array.from([number1]));
       const encodedNumber2 = batchEncoder.encode(Int32Array.from([number2]));
+      // Encode処理がvoidでないことを確認
+      if (!encodedNumber1 || !encodedNumber2) {
+          throw new Error('Encode failed');
+      }
 
       // 暗号文をBase64文字列として保存
       const cipherText1 = encryptor.encrypt(encodedNumber1);
       const cipherText2 = encryptor.encrypt(encodedNumber2);
+
+      // 暗号文がvoidでないことを確認
+      if (!cipherText1 || !cipherText2) {
+          throw new Error('Encryption failed');
+      }
       const cipherTextBase64_1 = cipherText1.save();
       const cipherTextBase64_2 = cipherText2.save();
 

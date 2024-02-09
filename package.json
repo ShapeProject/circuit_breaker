@@ -15,7 +15,8 @@
     "backend:verify:scrollSepolia": "yarn workspace backend verify:scrollSepolia",
     "backend:deploy:mock:scrollSepolia": "yarn workspace backend deploy:mock:scrollSepolia",
     "backend:script:verify:mock:scrollSepolia": "yarn workspace backend script:verify:mock:scrollSepolia",
-    
+    "frontend-sandbox:build": "yarn workspace frontend-sandbox build",
+    "frontend-sandbox:dev": "yarn workspace frontend-sandbox dev"
   },
   "workspaces": [
     "pkgs/*"

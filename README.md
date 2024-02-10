@@ -38,6 +38,32 @@
   yarn backend:deploy:scrollSepolia
   ```
 
+- execute getTxdata sample scripts
+
+  ```bash
+  yarn scripts:sample
+  ```
+
+  sample result
+
+  ```bash
+  Normal Transaction data: [
+    .
+    .
+    .
+  ]
+  Normal Transaction count: 12
+  Internal Transaction data: [
+    .
+    .
+    .
+  ]
+  Internal Transaction count: 3
+  Total Transaction count:15
+  ================================== [END] ==================================
+  ✨  Done in 1.61s.
+  ```
+
 ### References
 
 1. [particle-scroll-demo](https://particle-scroll-demo.replit.app/)

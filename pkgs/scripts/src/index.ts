@@ -37,12 +37,12 @@ async function main() {
 
     if (response.ok && response2.ok) {
       const data: any = await response.json();
-      const filteredData: any = data.result.filter((item: any) => item.to === "0x51908f598a5e0d8f1a3babfa6df76f9704dad072");
+      const filteredData: any = data.result.filter((item: any) => item.to === address);
       console.log('Normal Transaction data:', filteredData);
       console.log('Normal Transaction count:', filteredData.length);
 
       const data2: any = await response2.json();
-      const filteredData2: any = data2.result.filter((item: any) => item.to === "0x51908f598a5e0d8f1a3babfa6df76f9704dad072");
+      const filteredData2: any = data2.result.filter((item: any) => item.to === address);
       console.log('Internal Transaction data:', filteredData2);
       console.log('Internal Transaction count:', filteredData2.length);
 

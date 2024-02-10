@@ -21,7 +21,10 @@ module.exports = {
       },
 
       colors: {
-        Primary: "#362C49",
+        Primary10: "#362C49",
+        Primary20: "#463D57",
+        Primary30: "#665E75",
+        Primary40: "#9691A0",
         "pink-700": "#C3ABC2",
         "blue-400": "#6AA3EB",
       },

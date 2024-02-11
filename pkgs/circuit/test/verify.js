@@ -6,7 +6,7 @@ const fs = require("fs");
  */
 async function main() {
  
-  const WASM_PATH = "./ComputeRating_js/ComputeRating.wasm";
+  const WASM_PATH = "./build/ComputeRating_js/ComputeRating.wasm";
   const ZKEY_PATH = "./zkey/ComputeRating_final.zkey";
   const VKEY_PATH = "./zkey/verification_key.json"
   // input data

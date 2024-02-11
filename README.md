@@ -38,6 +38,18 @@
   yarn backend:deploy:scrollSepolia
   ```
 
+- compile circuit
+
+  ```bash
+  yarn circuit:executeGroth16
+  ```
+
+- test circuit
+
+  ```bash
+  yarn circuit:test
+  ```
+
 - execute getTxdata sample scripts
 
   ```bash

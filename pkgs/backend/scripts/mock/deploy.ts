@@ -11,6 +11,11 @@ async function main() {
   await verifier.waitForDeployment();
   console.log(` MockVerifier deployed to ${verifier.target}`);
 
+  // ScoreValut deploy
+  const scoreVault = await ethers.deployContract('ScoreVault', [verifier.target]);
+  await scoreVault.waitForDeployment();
+  console.log(` ScoreValut deployed to ${scoreVault.target}`);
+
   console.log(` =============================================== [end]  =============================================== `)
 }
 

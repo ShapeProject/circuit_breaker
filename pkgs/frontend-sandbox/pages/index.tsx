@@ -1,9 +1,10 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { readContract } from '@wagmi/core';
+import { readContract, writeContract } from '@wagmi/core';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useAccount, useNetwork } from 'wagmi';
 import styles from '../styles/Home.module.css';
+import ScoreVault from './../contracts/mock/ScoreVault.sol/ScoreVault.json';
 import MockVerifier from './../contracts/mock/verifier.sol/MockVerifier.json';
 
 /**
@@ -55,6 +56,47 @@ const Home: NextPage = () => {
     console.log("Verify Result:", verifyResult);
   }
 
+  /**
+   * verify2 methoc
+   */
+  const verify2 = async() => {
+    try {
+      await writeContract({
+        address: '0x207026A0c9E2715A6deC09b79bdEb0822bF735C6',
+        abi: ScoreVault.abi,
+        functionName: 'verifyProof',
+        args: [
+          [
+            '0x2646137374958b620388c0556d267c325bf7bfab92f3d65bfdd329c8a34ce5c4',
+            '0x02765560484e21b82d20e14242cd164f9432dba04e2e21445ef50bb47382f135'
+          ],
+          [
+            [
+              '0x14d21157e2ccdb5312c578309ae97bb78dd4d6d88c81357fd1410f788a1750f7',
+              '0x0350a1d3035d7dc257abfe5d4791af64c427e6c2f450ab328348de1b4d06c044'
+            ],
+            [
+              '0x1042ce7dd697c4df63ec378771a9381c972f336828f14cc134fa2ae7b10bb469',
+              '0x0ea4197d1c87faa9c519fbd7b63d22094796d3301573a7d9f259d1669de13dfb'
+            ]
+          ],
+          [
+            '0x02b9b085f1b29aa00e674fed59f50867fc3ace8c92830a9d8b7bc44bf42329f5',
+            '0x1c94342138dc8c749953a7d708f39af1a86775c2c4a96fea2d06242f93b39080'
+          ],
+          [
+            '0x000000000000000000000000000000000000000000000000000000000000003a',
+            '0x0000000000000000000000000000000000000000000000000000000000000003'
+          ]
+        ],
+      });
+      console.log("Verify OK!!")
+    } catch(err: any) {
+      console.error("err:", err)
+      console.error("Verify failed...")
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -86,6 +128,12 @@ const Home: NextPage = () => {
                   onClick={verify}
                 >
                   <h2>Verify</h2>
+                </button>
+
+                <button
+                  onClick={verify2}
+                >
+                  <h2>Verify2</h2>
                 </button>
 
               <a className={styles.card} href="https://wagmi.sh">

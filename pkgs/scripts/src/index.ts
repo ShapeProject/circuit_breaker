@@ -1,11 +1,5 @@
 import 'dotenv/config';
 
-type ApiResponse = {
-  status: string;
-  message: string;
-  result: any[];
-}
-
 /**
  * sample get Tx data Scripts
  */

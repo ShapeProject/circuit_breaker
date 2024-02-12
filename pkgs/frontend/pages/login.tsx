@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useAccount } from 'wagmi';
 
+/**
+ * Login Component
+ * @returns 
+ */
 export default function Login() {
   const [positionY, setPositionY] = useState([0, 0, 0, 0, 0]);
   const [styleId, setStyleId] = useState(["", "", "", "", ""]);
   // アニメーションの遅延
   const [delay] = useState([0, -1, -2, -3, -4]);
+
+  const router = useRouter();
+  const account = useAccount();
 
   useEffect(() => {
     // アニメーションを実行
@@ -31,16 +41,16 @@ export default function Login() {
       style.id = `style-${Date.now()}-${index}`; // id生成
 
       style.innerHTML = `
-    @keyframes bounceY${index + 1} {
-      0%, 100% { transform: translateY(-${posY}%); }
-      50% { transform: translateY(45%); }
-    }
+        @keyframes bounceY${index + 1} {
+          0%, 100% { transform: translateY(-${posY}%); }
+          50% { transform: translateY(45%); }
+        }
 
-    #circle${index + 1} {
-      animation: bounceY${index + 1} 5s ease-in-out infinite;
-      animation-delay: ${delay[index]}s;
-    }
-    `;
+        #circle${index + 1} {
+          animation: bounceY${index + 1} 5s ease-in-out infinite;
+          animation-delay: ${delay[index]}s;
+        }
+      `;
 
       document.head.appendChild(style);
       return style.id;
@@ -49,11 +59,15 @@ export default function Login() {
     setStyleId(newStyleId);
   }, [positionY, delay]);
 
+  useEffect(() => {
+    if(account.address != undefined) {
+      router.push('/my-page');
+    }
+  }, [account]);
+
   return (
     <div className="h-screen w-screen flex flex-row text-Primary10">
       <div className="relative h-full w-full bg-white">
-        
-
         <div className="relative z-10 h-full px-20 py-10 flex flex-col justify-between">
           <div>
             <a href="#" className="flex flex-row w-fit space-x-6 items-center">
@@ -77,16 +91,15 @@ export default function Login() {
             </div>
             <div>
               <button className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary40">
-                <div className="rounded-lg px-18 py-6 border border-transparent group-focus-visible:border-white">
+                <div className="rounded-lg px-18 py-4 border border-transparent group-focus-visible:border-white">
                   <span className="text-base font-semibold text-white">
-                    Connect Wallet
+                    <ConnectButton />
                   </span>
                 </div>
               </button>
             </div>
           </div>
           <div className="flex flex-row space-x-6">
-
             <a href="#" className="group">
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary40"
@@ -96,7 +109,6 @@ export default function Login() {
                 <use xlinkHref="./MCSVG/social_x_line.svg#social_x_line" />
               </svg>
             </a>
-
             <a href="#" className="group">
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary40"
@@ -106,10 +118,8 @@ export default function Login() {
                 <use xlinkHref="./MCSVG/github_2_fill.svg#github_2_fill" />
               </svg>
             </a>
-
           </div>
         </div>
-        
         <svg
           className="absolute z-0 top-0 right-0 h-full w-auto"
           viewBox="0 0 740 1080"

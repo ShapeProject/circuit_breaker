@@ -21,7 +21,7 @@ const {
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'RainbowKit App',
+  appName: 'TrustedScore',
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
   chains,
 });
@@ -36,7 +36,7 @@ const wagmiConfig = createConfig({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
+      <RainbowKitProvider chains={chains} coolMode={true} locale='en' showRecentTransactions={true}>
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>

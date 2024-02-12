@@ -4,7 +4,9 @@ import { HardhatUserConfig } from "hardhat/config";
 
 const {
   PRIVATE_KEY,
-  SCROLLSCAN_API_KEY
+  SCROLLSCAN_API_KEY,
+  GAS_REPORT,
+  COINMARKETCAP_API_KEY
 } = process.env;
 
 const config: HardhatUserConfig = {
@@ -30,6 +32,14 @@ const config: HardhatUserConfig = {
         },
       },
     ],
+  },
+  gasReporter: {
+    enabled: GAS_REPORT ? true : false,
+    currency: 'JPY',
+    gasPrice: 20,
+    token: 'ETH',
+    coinmarketcap: COINMARKETCAP_API_KEY,
+    gasPriceApi: 'https://api.etherscan.io/api?module=proxy&action=eth_gasPrice',
   },
 };
 

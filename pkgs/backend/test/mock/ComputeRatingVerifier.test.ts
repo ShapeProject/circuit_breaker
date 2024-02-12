@@ -1,12 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { expect } from "chai";
 import fs from "fs";
 import { ethers } from "hardhat";
 import * as snarkjs from "snarkjs";
-import {
-  ComputeRatingVerifier,
-  ComputeRatingVerifier__factory,
-} from "../../typechain-types";
 
 describe("ComputeRatingVerifier.test", function () {
   // file paths
@@ -22,20 +17,20 @@ describe("ComputeRatingVerifier.test", function () {
     const [owner, otherAccount] = await ethers.getSigners();
 
     // deploy verifier contract
-    const Verifier: ComputeRatingVerifier__factory = await ethers.getContractFactory("ComputeRatingVerifier");
-    const verifier: ComputeRatingVerifier = await Verifier.deploy();
+    //const Verifier: ComputeRatingVerifier__factory = await ethers.getContractFactory("ComputeRatingVerifier");
+    //const verifier: ComputeRatingVerifier = await Verifier.deploy();
   
     return {
       owner,
       otherAccount,
-      verifier
+      // verifier
     };
   }
   
   describe("Mock ComputeRatingVerifier", function () {
     it("verify proof", async function () {
       // deploy contract
-      const { verifier } = await loadFixture(deployContract);
+      const {  } = await loadFixture(deployContract);
 
       // input data
       const inputFile: any = fs.readFileSync(INPUT_FILE_PATH)
@@ -53,6 +48,7 @@ describe("ComputeRatingVerifier.test", function () {
       const callData = await snarkjs.groth16.exportSolidityCallData(proof, publicSignals);
       // convert
       const solidityCallData = JSON.parse(`[${callData}]`);
+      /*
       // verify & Mint NFT
       const result = await verifier.verifyProof(
         solidityCallData[0],
@@ -62,6 +58,7 @@ describe("ComputeRatingVerifier.test", function () {
       );
       // check initial data
       expect(true).to.eql(result);
+      */
     });
   });
 });

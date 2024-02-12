@@ -37,7 +37,7 @@ echo "----- Generate Solidity verifier -----"
 snarkjs zkey export solidityverifier ./zkey/${CIRCUIT}_final.zkey sol/${CIRCUIT}Verifier.sol
 
 # Update the solidity version in the Solidity verifier
-sed 's/0.6.11;/0.8.19;/g' sol/${CIRCUIT}Verifier.sol > sol/${CIRCUIT}Verifier2.sol
+sed 's/0.6.11;/0.8.20;/g' sol/${CIRCUIT}Verifier.sol > sol/${CIRCUIT}Verifier2.sol
 # Update the contract name in the Solidity verifier
 sed "s/contract Verifier/contract ${CIRCUIT}Verifier/g" sol/${CIRCUIT}Verifier2.sol > sol/${CIRCUIT}Verifier.sol
 rm sol/${CIRCUIT}Verifier2.sol

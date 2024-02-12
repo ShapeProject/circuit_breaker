@@ -11,8 +11,14 @@ async function main() {
   await verifier.waitForDeployment();
   console.log(` MockVerifier deployed to ${verifier.target}`);
 
+  // forwarder deploy
+  const Forwarder = await ethers.getContractFactory("ScoreVaultForwarder");
+  const forwarder = await Forwarder.deploy();
+
+  console.log(` ScoreVaultForwarder deployed to ${forwarder.target}`);
+
   // ScoreValut deploy
-  const scoreVault = await ethers.deployContract('ScoreVault', [verifier.target]);
+  const scoreVault = await ethers.deployContract('ScoreVault', [verifier.target, forwarder.target]);
   await scoreVault.waitForDeployment();
   console.log(` ScoreValut deployed to ${scoreVault.target}`);
 

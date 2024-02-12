@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import './interface/IVerifier.sol';
+import '@openzeppelin/contracts/metatx/ERC2771Context.sol';
 
-contract ScoreVault {
+contract ScoreVault is ERC2771Context {
 
-  // verifierContract
+  // verifier Contract
   IVerifier public immutable verifierContract;
 
   // Score struct
@@ -23,7 +24,10 @@ contract ScoreVault {
   /**
    * constructor 
    */
-  constructor(address _verifierContract) {
+  constructor(
+    address _verifierContract,
+    address _trustedForwarder
+  ) ERC2771Context(_trustedForwarder) {
     verifierContract = IVerifier(_verifierContract);
   }
 
@@ -61,6 +65,40 @@ contract ScoreVault {
     } else {
       emit Verify(msg.sender, false);
       return false;
+    }
+  }
+
+  ///////////////////////////////// ERC2771 method /////////////////////////////////
+
+  function _msgSender()
+    internal
+    view
+    virtual
+    override
+    returns (address sender)
+  {
+    if (isTrustedForwarder(msg.sender)) {
+      // The assembly code is more direct than the Solidity version using `abi.decode`.
+      /// @solidity memory-safe-assembly
+      assembly {
+        sender := shr(96, calldataload(sub(calldatasize(), 20)))
+      }
+    } else {
+      return super._msgSender();
+    }
+  }
+
+  function _msgData()
+    internal
+    view
+    virtual
+    override
+    returns (bytes calldata)
+  {
+    if (isTrustedForwarder(msg.sender)) {
+      return msg.data[:msg.data.length - 20];
+    } else {
+      return super._msgData();
     }
   }
 }

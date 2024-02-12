@@ -1,7 +1,7 @@
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { WagmiConfig, configureChains, createConfig } from 'wagmi';
 import {
   scrollSepolia
 } from 'wagmi/chains';
@@ -36,7 +36,23 @@ const wagmiConfig = createConfig({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} coolMode={true} locale='en' showRecentTransactions={true}>
+      <RainbowKitProvider 
+        chains={chains} 
+        coolMode={true} 
+        locale='en' 
+        showRecentTransactions={true}
+        theme={darkTheme({
+          accentColor: '#7b3fe4',
+          accentColorForeground: 'white',
+          borderRadius: 'small',
+          fontStack: 'system',
+          overlayBlur: 'small',
+        })}
+        appInfo={{
+          appName: 'TrustedScore',
+          learnMoreUrl: 'https://github.com/ShapeProject/circuit_breaker',
+        }}
+      >
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>

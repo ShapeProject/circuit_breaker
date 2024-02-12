@@ -8,11 +8,20 @@
     "test": "hardhat test",
     "compile": "hardhat compile",
     "deploy:scrollSepolia": "hardhat run scripts/deploy.ts --network scrollSepolia",
-    "verify:scrollSepolia": "hardhat verify 0x67ADc29278d87D87b212C59fDffd2749fe7418c4 --network scrollSepolia  1695472571"
+    "verify:scrollSepolia": "hardhat verify 0x0d5D749BEbB9521c9604727aB22091a924b4aDd4 --network scrollSepolia 0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069 0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5",
+    "deploy:mock:scrollSepolia": "hardhat run scripts/mock/deploy.ts --network scrollSepolia",
+    "verify:mock:scrollSepolia": "hardhat verify 0x207026A0c9E2715A6deC09b79bdEb0822bF735C6 --network scrollSepolia",
+    "script:verify:mock:scrollSepolia": "hardhat run scripts/mock/verify.ts --network scrollSepolia",
+    "script:gaslessVerify:mock:scrollSepolia": "hardhat run scripts/mock/relay/gaslessVerify.ts --network scrollSepolia",
+    "script:gaslessSetScore:mock:scrollSepolia": "hardhat run scripts/mock/relay/gaslessSetScore.ts --network scrollSepolia"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1",
+    "@openzeppelin/defender-relay-client": "^1.54.1",
+    "@types/snarkjs": "^0.7.8",
     "dotenv": "^16.3.1",
-    "hardhat": "^2.17.3"
+    "hardhat": "^2.17.3",
+    "snarkjs": "0.6.10"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

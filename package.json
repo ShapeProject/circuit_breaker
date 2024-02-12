@@ -13,6 +13,8 @@
     "backend:verify:scrollSepolia": "yarn workspace backend verify:scrollSepolia",
     "backend:deploy:mock:scrollSepolia": "yarn workspace backend deploy:mock:scrollSepolia",
     "backend:script:verify:mock:scrollSepolia": "yarn workspace backend script:verify:mock:scrollSepolia",
+    "backend:script:gaslessVerify:mock:scrollSepolia": "yarn workspace backend script:gaslessVerify:mock:scrollSepolia",
+    "backend:script:gaslessSetScore:mock:scrollSepolia": "yarn workspace backend script:gaslessSetScore:mock:scrollSepolia",
     "circuit:test": "yarn workspace circuit test",
     "circuit:executeGroth16": "yarn workspace circuit executeGroth16",
     "circuit:cp:verifier": "yarn workspace circuit cp:verifier",

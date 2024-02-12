@@ -18,8 +18,8 @@ async function main() {
   console.log(` ScoreVaultForwarder deployed to ${forwarder.target}`);
 
   // ScoreValut deploy
-  const scoreVault = await ethers.deployContract('ScoreVault', [verifier.target, forwarder.target]);
-  await scoreVault.waitForDeployment();
+  const ScoreVault = await ethers.getContractFactory("ScoreVault");
+  const scoreVault = await ScoreVault.deploy(verifier.target, forwarder.target);
   console.log(` ScoreValut deployed to ${scoreVault.target}`);
 
   console.log(` =============================================== [end]  =============================================== `)

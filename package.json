@@ -9,6 +9,7 @@
   "scripts": {
     "backend:build": "yarn workspace backend compile",
     "backend:test": "yarn workspace backend test",
+    "backend:cp:contracts": "yarn workspace backend cp:contracts",
     "backend:deploy:scrollSepolia": "yarn workspace backend deploy:scrollSepolia",
     "backend:verify:scrollSepolia": "yarn workspace backend verify:scrollSepolia",
     "backend:deploy:mock:scrollSepolia": "yarn workspace backend deploy:mock:scrollSepolia",

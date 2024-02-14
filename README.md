@@ -118,6 +118,76 @@
   ✨  Done in 1.61s.
   ```
 
+## Backend APIs Overview
+
+Before interacting with the backend APIs, ensure the frontend is built and running. Use the following command to start:
+
+```bash
+yarn build:dev
+```
+
+### 1. Generate Key Pairs
+
+Generates a public and a private key for encryption and decryption.
+
+- Endpoint: /api/generateKeyPairs
+- Method: POST
+- Request (req):
+  ```
+  { "name": "<your name>" }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/generateKeyPairs -H "Content-Type: application/json" -d '{"name":"<your name>"}'
+  ```
+
+### 2. Encrypt Number
+
+Encrypts a given number using the generated public key.
+
+- Endpoint: /api/encrypt
+- Method: POST
+- Request (req):
+  ```
+  { "name": "<your name>", "num": "<put number>" }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/encrypt -H "Content-Type: application/json" -d '{"name":"<your name>", "num":"<put number>"}'
+  ```
+
+### 3. Add Encrypted Numbers
+
+Adds two encrypted numbers together, returning the encrypted sum.
+
+- Endpoint: /api/add
+- Method: POST
+- Request (req):
+  ```
+  { "name": "<your name>", "encNum1": "<put encNum1>", "encNum2": "<put encNum2>" }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/add -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum1":"<put encNum1>", "encNum2":"<put encNum2>"}'
+  ```
+
+### 4. Decrypt Encrypted Number
+
+Decrypts an encrypted number using the generated private key.
+
+- Endpoint: /api/decypt
+- Method: POST
+- Request (req):
+  ```
+  { "name": "<your name>", "encNum": "<put encNum>" }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/decrypt -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum":"<put encNum>"}'
+  ```
+
+This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
+
 ### References
 
 1. [particle-scroll-demo](https://particle-scroll-demo.replit.app/)

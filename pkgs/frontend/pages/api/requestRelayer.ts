@@ -26,7 +26,7 @@ const getRelayer = async() => {
 }
 
 /**
- * getTxCount API
+ * requestRelayer API
  * @param req 
  * @param res 
  */
@@ -41,10 +41,20 @@ export default async function handler(
     return res.status(403).json({error: "Request has no body"});
   }
 
-  console.log("body:", body);
+  // recreate request data
+  const request = {
+    from: body.from,
+    to: body.to,
+    value: BigInt(body.value),
+    gas: BigInt(body.gas),
+    nonce: BigInt(body.nonce),
+    deadline: BigInt(body.deadline),
+    data: body.data,
+    signature: body.signature
+  }
 
-  // get data from request body 
-  const request = body.requestData;
+  console.log("request:", request);
+
   // get relayer
   const relayer: any = await getRelayer();
   // create forwarder contract instance
@@ -53,18 +63,19 @@ export default async function handler(
   try {
     // call verify method
     const result = await forwarder.verify(request);
+    console.log(result)
     if(!result) throw "invalid request data!";
 
     // call execute method from relayer
     await forwarder.execute(request);
-
+   
     console.log(" ========================================= [RequestRaler: END] ==============================================");
     res.setHeader("Content-Type", "text/json");
     res.status(200).json({
       result: "ok"
     })
   } catch (error) {
-    console.error('Error getTxCount :', error);
+    console.error('Error requestRelayer :', error);
     console.log(" ========================================= [RequestRaler: END] ==============================================");
     res.setHeader("Content-Type", "text/json");
     res.status(501).json({

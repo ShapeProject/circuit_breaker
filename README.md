@@ -129,7 +129,7 @@ Adds two encrypted numbers together, returning the encrypted sum.
   curl -X POST http://localhost:3000/api/add -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum1":"<put encNum1>", "encNum2":"<put encNum2>"}'
   ```
 
-### 3. Add Encrypted Numbers
+### 4. Decrypt Encrypted Number
 
 Decrypts an encrypted number using the generated private key.
 

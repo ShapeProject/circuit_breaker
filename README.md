@@ -2,6 +2,30 @@
 
 ## How to work
 
+- setup `.env` & `.env.local`
+
+  - create `.env` file in `backend` folder.  
+    And you need to fill below.
+
+    ```txt
+    PRIVATE_KEY=
+    SCROLLSCAN_API_KEY=
+    DEFENDER_API_KEY=
+    DEFENDER_SECRET_KEY=
+    GAS_REPORT=
+    COINMARKETCAP_API_KEY=
+    ```
+
+  - create `.env.local` file in `frontend` folder.  
+    And you need to fill below.
+
+    ```txt
+    NEXT_PUBLIC_ENABLE_TESTNETS=true
+    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
+    SCROLLSCAN_API_KEY=""
+    NEXT_PUBLIC_SINDRI_API_KEY=""
+    ```
+
 - install
 
   ```bash
@@ -36,6 +60,24 @@
 
   ```bash
   yarn backend:deploy:scrollSepolia
+  ```
+
+- call Mock contract `verifyproof` method
+
+  ```bash
+  yarn backend:script:verify:mock:scrollSepolia
+  ```
+
+- call Mock contract `verifyproof` method (Gasless)
+
+  ```bash
+  yarn backend:script:gaslessVerify:mock:scrollSepolia
+  ```
+
+- call Mock contract `setScore` method (Gasless)
+
+  ```bash
+  yarn backend:script:gaslessSetScore:mock:scrollSepolia
   ```
 
 - compile circuit

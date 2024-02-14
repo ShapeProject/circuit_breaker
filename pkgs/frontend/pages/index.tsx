@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useAccount } from 'wagmi';
 
 export default function Login() {
   const [positionY, setPositionY] = useState([0, 0, 0, 0, 0]);
   const [styleId, setStyleId] = useState(["", "", "", "", ""]);
   // アニメーションの遅延
   const [delay] = useState([0, -1, -2, -3, -4]);
+
+  const router = useRouter();
+  const account = useAccount();
 
   useEffect(() => {
     // アニメーションを実行
@@ -49,6 +55,12 @@ export default function Login() {
     setStyleId(newStyleId);
   }, [positionY, delay]);
 
+  useEffect(() => {
+    if(account.address != undefined) {
+      router.push('/my-page');
+    }
+  }, [account]);
+
   return (
     <div className="w-screen h-screen flex flex-row">
       <div className="w-full relative">
@@ -76,7 +88,9 @@ export default function Login() {
             <div>
               <button className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary40">
                 <div className="rounded-lg px-18 py-4 border border-transparent group-focus-visible:border-white">
-                  <span className="text-Button text-white">Connect Wallet</span>
+                  <span className="text-base font-semibold text-white">
+                    <ConnectButton />
+                  </span>
                 </div>
               </button>
             </div>

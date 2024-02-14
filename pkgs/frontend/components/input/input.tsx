@@ -8,7 +8,7 @@ type InputProps = {
   autoCorrect: string;
   autoCapitalize: string;
   autoComplete: string;
-  icon: string;
+  icon: any;
 };
 
 const Input: React.FC<InputProps> = ({

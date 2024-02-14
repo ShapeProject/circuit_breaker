@@ -2,10 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type * as scoreValutForwarderSol from "./ScoreValutForwarder.sol";
-export type { scoreValutForwarderSol };
+// @ts-ignore
 import type * as interface from "./interface";
-export type { interface };
 import type * as verifierSol from "./verifier.sol";
-export type { verifierSol };
 export type { ComputeRatingVerifier } from "./ComputeRatingVerifier";
 export type { ScoreVault } from "./ScoreVault";
+export type { interface, scoreValutForwarderSol, verifierSol };
+

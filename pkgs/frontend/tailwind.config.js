@@ -7,13 +7,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        'InputWidth': '512px',
+      },
+
       spacing: {
         18: "72px",
         26: "104px",
+
+        "68pct": "68%",
+        "89pct": "89%",
+        "92pct": "92%",
       },
 
       fontFamily: {
         sans: ["Noto Sans"],
+        mono: ["Noto Sans Mono"],
       },
 
       fontSize: {
@@ -28,14 +37,15 @@ module.exports = {
         }],
         "Input": ['1.5rem', {
           fontWeight: '400',
-          lineHeight: '1rem',
         }],
         "InputLabel": ['1.5rem', {
           fontWeight: '400',
         }],
         "InputLabelFocus": ['0.9rem', {
           fontWeight: '400',
-          lineHeight: '0.625rem',
+        }],
+        "AvgScore": ['8rem', {
+          fontWeight: '500',
         }],
       },
 
@@ -47,6 +57,9 @@ module.exports = {
         Input10: "#144F99",
         Input20: "#807C87",
         Input30: "#EBEFF5",
+        Gray10: "#DCDBE2",
+        Gray20: "#ECECF1",
+        Gray30: "#F9F9FA",
         "white": "#FCFDFF",
         "pink-700": "#C3ABC2",
         "blue-400": "#6AA3EB",
@@ -64,9 +77,13 @@ module.exports = {
 
       borderWidth: {
         3: "3px",
+        12: "12px",
+        24: "24px",
+        40: "40px",
       },
 
       boxShadow: {
+        'md': '6px 6px 8px 0 rgba(220, 219, 226, 0.24)',
         'lg': '0 16px 32px 4px rgba(54, 44, 73, 0.2)',
       },
     },

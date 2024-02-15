@@ -1,3 +1,4 @@
+import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 
 
@@ -18,18 +19,22 @@ export default function MyPage() {
               <span className="w-64 text-BodyMono text-right">13</span>
             </div>
           </div>
-          <div>★★★★★</div>
+          <FiveStarRating
+          value={3.2}
+          count = {5}
+          size={40}
+          />
         </div>
         <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
           <div className="h-full aspect-square rounded-full bg-Gray30">
             <div className="h-68pct aspect-square rounded-full bg-white shadow-md">
               <div className="h-89pct aspect-square rounded-full border-40 border-Gray20 border-dashed">
                 <div className="h-92pct aspect-square rounded-full border-24 border-Gray20">
-                <div className="h-92pct aspect-square rounded-full border-12 border-Gray20">
-                  <div className="h-92pct aspect-square rounded-full bg-Primary10 shadow-lg">
-                    <span className="font-mono text-AvgScore text-white">85</span>
+                  <div className="h-92pct aspect-square rounded-full border-12 border-Gray20">
+                    <div className="h-92pct aspect-square rounded-full bg-Primary10 shadow-lg">
+                      <span className="font-mono text-AvgScore text-white">85</span>
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>

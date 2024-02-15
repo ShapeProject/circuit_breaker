@@ -88,7 +88,7 @@ export default function Login() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
-                <use xlinkHref="./MCSVG/social_x_line.svg#social_x_line" />
+                <use xlinkHref="./icons/social_x_line.svg#social_x_line" />
               </svg>
             </a>
 
@@ -98,7 +98,7 @@ export default function Login() {
                 xmlns="http://www.w3.org.2000/svg"
                 viewBox="0 0 24 24"
               >
-                <use xlinkHref="./MCSVG/github_2_fill.svg#github_2_fill" />
+                <use xlinkHref="./icons/github_2_fill.svg#github_2_fill" />
               </svg>
             </a>
           </div>

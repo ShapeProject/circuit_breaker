@@ -26,5 +26,9 @@
   },
   "workspaces": [
     "pkgs/*"
-  ]
+  ],
+  "devDependencies": {
+    "@types/node": "^20.11.18",
+    "@types/react": "^18.2.55"
+  }
 }

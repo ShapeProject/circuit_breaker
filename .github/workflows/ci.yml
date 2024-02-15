@@ -36,7 +36,7 @@ jobs:
           CI: true
   smartContract-test:
     runs-on: ubuntu-latest
-    needs: [frontend-test]
+    needs: [circuit-test]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

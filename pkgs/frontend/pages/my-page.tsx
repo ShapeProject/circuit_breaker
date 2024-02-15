@@ -1,8 +1,36 @@
 import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-
+import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
+import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
+import { readContract } from "@wagmi/core";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 export default function MyPage() {
+  
+  const [encrptedScore, setEncyrptedScore] = useState("");
+
+  const account = useAccount();
+
+  useEffect(() => {
+    /**
+     * init method
+     */
+    const init = async() => {
+      if(account.address != undefined) {
+        // get encryptedScore
+        const result = await readContract({
+          address: SCOREVAULT_CONTRACT_ADDRESS,
+          abi: ScoreValutJson.abi,
+          functionName: "getScore",
+          args: [account.address]
+        });
+        console.log("result:", result);
+      }
+    }
+    init();
+  }, []);
+
   return (
     <div className="h-screen w-screen flex flex-row">
       <NavigationSidebar />

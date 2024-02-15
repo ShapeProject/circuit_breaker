@@ -7,10 +7,10 @@
   "scripts": {
     "test": "hardhat test",
     "compile": "hardhat compile",
+    "cp:contracts": "cp -r ./artifacts/contracts ../frontend && cp -r ./typechain-types ../frontend/contracts",
     "deploy:scrollSepolia": "hardhat run scripts/deploy.ts --network scrollSepolia",
-    "verify:scrollSepolia": "hardhat verify 0x0d5D749BEbB9521c9604727aB22091a924b4aDd4 --network scrollSepolia 0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069 0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5",
+    "verify:scrollSepolia": "hardhat verify 0xacff3BF500e0E9F7734D39064B290873d80Fe749 --network scrollSepolia 0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069 0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5",
     "deploy:mock:scrollSepolia": "hardhat run scripts/mock/deploy.ts --network scrollSepolia",
-    "verify:mock:scrollSepolia": "hardhat verify 0x207026A0c9E2715A6deC09b79bdEb0822bF735C6 --network scrollSepolia",
     "script:verify:mock:scrollSepolia": "hardhat run scripts/mock/verify.ts --network scrollSepolia",
     "script:gaslessVerify:mock:scrollSepolia": "hardhat run scripts/mock/relay/gaslessVerify.ts --network scrollSepolia",
     "script:gaslessSetScore:mock:scrollSepolia": "hardhat run scripts/mock/relay/gaslessSetScore.ts --network scrollSepolia"
@@ -21,6 +21,7 @@
     "@types/snarkjs": "^0.7.8",
     "dotenv": "^16.3.1",
     "hardhat": "^2.17.3",
+    "hardhat-gas-reporter": "^1.0.10",
     "snarkjs": "0.6.10"
   },
   "devDependencies": {

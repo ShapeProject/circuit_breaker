@@ -48,7 +48,7 @@ export interface ScoreVaultInterface extends Interface {
   encodeFunctionData(functionFragment: "scores", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "setScore",
-    values: [BigNumberish, string]
+    values: [AddressLike, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "trustedForwarder",
@@ -186,7 +186,7 @@ export interface ScoreVault extends BaseContract {
   >;
 
   setScore: TypedContractMethod<
-    [_count: BigNumberish, _encryptedData: string],
+    [_to: AddressLike, _count: BigNumberish, _encryptedData: string],
     [void],
     "nonpayable"
   >;
@@ -226,7 +226,7 @@ export interface ScoreVault extends BaseContract {
   getFunction(
     nameOrSignature: "setScore"
   ): TypedContractMethod<
-    [_count: BigNumberish, _encryptedData: string],
+    [_to: AddressLike, _count: BigNumberish, _encryptedData: string],
     [void],
     "nonpayable"
   >;

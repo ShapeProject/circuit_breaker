@@ -37,8 +37,9 @@ export default function Evaluate() {
       const scoreVault: ScoreVault = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
       // get domain
       const domain = await forwarder.eip712Domain();
-      // crate encodedFunctionData
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[4, "testtest"])
+      // create encodedFunctionData
+      // @ts-ignore
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, 4, "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data

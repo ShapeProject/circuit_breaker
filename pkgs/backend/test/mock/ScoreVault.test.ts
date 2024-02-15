@@ -147,7 +147,7 @@ describe("ScoreVault", function () {
       const sampleData = "0xsssgsete"
 
       // call setScoremethod
-      await scoreVault.setScore(sampleCount, sampleData);
+      await scoreVault.setScore(await owner.getAddress(), sampleCount, sampleData);
       // get score data 
       const result = await scoreVault.getScore(owner.address);
       // check

@@ -31,6 +31,14 @@ module.exports = {
           letterSpacing: '0.028em',
           fontWeight: '400',
         }],
+        "BodyStrong": ['1rem', {
+          fontWeight: '500',
+        }],
+        "BodyMono": [ '1.5rem', {
+          fontWeight: '400',
+        }
+
+        ],
         "Button": ['1rem', {
           letterSpacing: '0.028em',
           fontWeight: '600',
@@ -53,7 +61,8 @@ module.exports = {
         Primary10: "#362C49",
         Primary20: "#463D57",
         Primary30: "#665E75",
-        Primary40: "#9691A0",
+        Primary40: "#6E677A",
+        Primary50: "#9691A0",
         Input10: "#144F99",
         Input20: "#807C87",
         Input30: "#EBEFF5",

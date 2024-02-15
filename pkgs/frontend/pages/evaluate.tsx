@@ -9,7 +9,7 @@ import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils
 import { getUint48 } from "@/utils/getUint48";
 import { ForwardRequest } from "@/utils/types";
 import { Contract } from "ethers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccount, useSignTypedData } from "wagmi";
@@ -17,6 +17,7 @@ import { useAccount, useSignTypedData } from "wagmi";
 
 export default function Evaluate() {
   const [isLoading, setIsLoading] = useState(false);
+  const [txCount, setTxCount] = useState(0);
 
   const account = useAccount();
   const { signTypedDataAsync } = useSignTypedData();
@@ -36,8 +37,9 @@ export default function Evaluate() {
       const scoreVault: ScoreVault = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
       // get domain
       const domain = await forwarder.eip712Domain();
-      // crate encodedFunctionData
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[4, "testtest"])
+      // create encodedFunctionData
+      // @ts-ignore
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, 4, "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data
@@ -107,6 +109,30 @@ export default function Evaluate() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    /**
+     * init method
+     */
+    const init = async() => {
+      if(account.address != undefined) {
+        // get txCount
+        const res = await fetch('/api/getTxCount', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify({
+            address: account.address
+          }),
+        });
+        const data = await res.json();
+        console.log("Tx Count:", data.txCount);
+        setTxCount(data.txCount);
+      }
+    }
+    init();
+  }, []);
 
   return (
     <div className="h-screen w-screen flex flex-row bg-white">

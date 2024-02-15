@@ -35,11 +35,12 @@ contract ScoreVault is ERC2771Context {
    * setScore method
    */
   function setScore(
+    address _to,
     uint256 _count, 
     string memory _encryptedData)
-   external {
-    scores[msg.sender] = Score(_count, _encryptedData);
-    emit UpdateScore(msg.sender, _count, _encryptedData);
+  external {
+    scores[_to] = Score(_count, _encryptedData);
+    emit UpdateScore(_to, _count, _encryptedData);
   }
 
   /**

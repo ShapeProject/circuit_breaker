@@ -46,8 +46,7 @@ export default async function handler(
   const point = 'account';
   const action = 'txlist';
   const action2 = 'txlistinternal';
-  // const address = body.address;
-  const address = "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072";
+  const address = body.address;
   const startblock = 0;
   const endblock = 99999999;
   const page = 1;

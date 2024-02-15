@@ -26,8 +26,6 @@ export type { ShortStrings } from "./@openzeppelin/contracts/utils/ShortStrings"
 export { ShortStrings__factory } from "./factories/@openzeppelin/contracts/utils/ShortStrings__factory";
 export type { Strings } from "./@openzeppelin/contracts/utils/Strings";
 export { Strings__factory } from "./factories/@openzeppelin/contracts/utils/Strings__factory";
-export type { ComputeRatingVerifier } from "./contracts/mock/ComputeRatingVerifier";
-export { ComputeRatingVerifier__factory } from "./factories/contracts/mock/ComputeRatingVerifier__factory";
 export type { IVerifier } from "./contracts/mock/interface/IVerifier";
 export { IVerifier__factory } from "./factories/contracts/mock/interface/IVerifier__factory";
 export type { ScoreVaultForwarder } from "./contracts/mock/ScoreValutForwarder.sol/ScoreVaultForwarder";

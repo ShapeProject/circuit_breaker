@@ -169,7 +169,7 @@ export default function Evaluate() {
 
               <div>
                 <button 
-                  className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary40"
+                  className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary50"
                   onClick={async() => { await setScore() }}
                 >
                   <div className="rounded-lg px-18 py-4 border border-transparent group-focus-visible:border-white">

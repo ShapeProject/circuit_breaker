@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function MyPage() {
-  
+  const [txCount, setTxCount] = useState(0);
   const [encrptedScore, setEncyrptedScore] = useState("");
 
   const account = useAccount();
@@ -26,6 +26,19 @@ export default function MyPage() {
           args: [account.address]
         });
         console.log("result:", result);
+        // get txCount
+        const res = await fetch('/api/getTxCount', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify({
+            address: account.address
+          }),
+        });
+        const data = await res.json();
+        console.log("Tx Count:", data.txCount);
+        setTxCount(data.txCount);
       }
     }
     init();
@@ -44,12 +57,12 @@ export default function MyPage() {
             </div>
             <div className="space-y-6 flex flex-col">
               <span className="text-BodyStrong text-Primary40">Received</span>
-              <span className="w-64 text-BodyMono text-right">13</span>
+              <span className="w-64 text-BodyMono text-right">{txCount}</span>
             </div>
           </div>
           <FiveStarRating
           value={3.2}
-          count = {5}
+          count = {txCount}
           size={40}
           />
         </div>

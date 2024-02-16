@@ -7,13 +7,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        'InputWidth': '512px',
+      },
+
       spacing: {
         18: "72px",
         26: "104px",
+
+        "68pct": "68%",
+        "89pct": "89%",
+        "92pct": "92%",
       },
 
       fontFamily: {
         sans: ["Noto Sans"],
+        mono: ["Noto Sans Mono"],
       },
 
       fontSize: {
@@ -22,20 +31,29 @@ module.exports = {
           letterSpacing: '0.028em',
           fontWeight: '400',
         }],
+        "BodyStrong": ['1rem', {
+          fontWeight: '500',
+        }],
+        "BodyMono": [ '1.5rem', {
+          fontWeight: '400',
+        }
+
+        ],
         "Button": ['1rem', {
           letterSpacing: '0.028em',
           fontWeight: '600',
         }],
         "Input": ['1.5rem', {
           fontWeight: '400',
-          lineHeight: '1rem',
         }],
         "InputLabel": ['1.5rem', {
           fontWeight: '400',
         }],
         "InputLabelFocus": ['0.9rem', {
           fontWeight: '400',
-          lineHeight: '0.625rem',
+        }],
+        "AvgScore": ['8rem', {
+          fontWeight: '500',
         }],
       },
 
@@ -43,10 +61,14 @@ module.exports = {
         Primary10: "#362C49",
         Primary20: "#463D57",
         Primary30: "#665E75",
-        Primary40: "#9691A0",
+        Primary40: "#6E677A",
+        Primary50: "#9691A0",
         Input10: "#144F99",
         Input20: "#807C87",
         Input30: "#EBEFF5",
+        Gray10: "#DCDBE2",
+        Gray20: "#ECECF1",
+        Gray30: "#F9F9FA",
         "white": "#FCFDFF",
         "pink-700": "#C3ABC2",
         "blue-400": "#6AA3EB",
@@ -64,9 +86,13 @@ module.exports = {
 
       borderWidth: {
         3: "3px",
+        12: "12px",
+        24: "24px",
+        40: "40px",
       },
 
       boxShadow: {
+        'md': '6px 6px 8px 0 rgba(220, 219, 226, 0.24)',
         'lg': '0 16px 32px 4px rgba(54, 44, 73, 0.2)',
       },
     },

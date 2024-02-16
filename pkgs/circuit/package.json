@@ -10,7 +10,7 @@
     "snarkjs": "0.6.10"
   },
   "scripts": {
-    "test": "node ./test/verify.js",
+    "test": "node ./test/verify.test.js",
     "executeGroth16": "./script/executeGroth16.sh",
     "cp:verifier": "cp ComputeRatingVerifier.sol ../backend/contracts/mock"
   }

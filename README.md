@@ -1,6 +1,40 @@
 # circuit_breaker
 
+## Deployed Contracts Info
+
+| Conract Name | Address                                                                                                                         | Network        |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------------ | :------------- |
+| ScoreValut   | [0xacff3BF500e0E9F7734D39064B290873d80Fe749](https://sepolia.scrollscan.dev/address/0xacff3BF500e0E9F7734D39064B290873d80Fe749) | Scroll Sepolia |
+| Forwarder    | [0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5](https://sepolia.scrollscan.dev/address/0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5) | Scroll Sepolia |
+| Verifier     | [0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069](https://sepolia.scrollscan.dev/address/0x819cb57caeee4d4d10dd583ffae5df4094ebb069) | Scroll Sepolia |
+
 ## How to work
+
+- setup `.env` & `.env.local`
+
+  - create `.env` file in `backend` folder.  
+    And you need to fill below.
+
+    ```txt
+    PRIVATE_KEY=
+    SCROLLSCAN_API_KEY=
+    DEFENDER_API_KEY=
+    DEFENDER_SECRET_KEY=
+    GAS_REPORT=
+    COINMARKETCAP_API_KEY=
+    ```
+
+  - create `.env.local` file in `frontend` folder.  
+    And you need to fill below.
+
+    ```txt
+    NEXT_PUBLIC_ENABLE_TESTNETS=true
+    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
+    NEXT_PUBLIC_SINDRI_API_KEY=""
+    SCROLLSCAN_API_KEY=""
+    DEFENDER_API_KEY=""
+    DEFENDER_SECRET_KEY=""
+    ```
 
 - install
 
@@ -36,6 +70,24 @@
 
   ```bash
   yarn backend:deploy:scrollSepolia
+  ```
+
+- call Mock contract `verifyproof` method
+
+  ```bash
+  yarn backend:script:verify:mock:scrollSepolia
+  ```
+
+- call Mock contract `verifyproof` method (Gasless)
+
+  ```bash
+  yarn backend:script:gaslessVerify:mock:scrollSepolia
+  ```
+
+- call Mock contract `setScore` method (Gasless)
+
+  ```bash
+  yarn backend:script:gaslessSetScore:mock:scrollSepolia
   ```
 
 - compile circuit

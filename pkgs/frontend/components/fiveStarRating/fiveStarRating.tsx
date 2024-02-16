@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC } from "react";
 import StarIcon from "../Icons/StarIcon";
 
 type PropsType = {
@@ -18,6 +18,7 @@ export const FiveStarRating: FC<PropsType> = ({ count, value, size, }: PropsType
                 className="absolute top-0 left-0 z-10 flex flex-row items-center space-x-1 overflow-hidden" 
                 style={{ width: `${avg}%` }}>
                     {...Array.from({ length: count }, (_, index) => (
+                        // eslint-disable-next-line react/jsx-key
                         <li>
                             <StarIcon key={index} width={size} height={size} className=" fill-Primary10" />
                         </li>
@@ -26,6 +27,7 @@ export const FiveStarRating: FC<PropsType> = ({ count, value, size, }: PropsType
 
                 <ul className="flex flex-row items-center space-x-1">
                     {...Array.from({ length: count }, (_, index) => (
+                        // eslint-disable-next-line react/jsx-key
                         <li>
                             <StarIcon key={index} width={size} height={size} className=" fill-Primary60" />
                         </li>

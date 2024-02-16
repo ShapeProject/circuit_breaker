@@ -16,6 +16,8 @@ export default async function generateKeyPairs(req: NextApiRequest, res: NextApi
     if (req.method === 'POST') {
         try {
             const { name } = req.body;
+            const keyLength = Number(process.env.KEY_LENGTH) || 1024;
+            console.log('Key Length:', keyLength); 
 
             // Validate if the name is provided in the request body.
             if (!name) {
@@ -24,7 +26,7 @@ export default async function generateKeyPairs(req: NextApiRequest, res: NextApi
 
             // Generate Paillier key pairs with 128-bit security level. Note: For production environments, 
             // it's recommended to handle key generation and storage in a separate, secure process.
-            const { publicKey, privateKey } = await paillierBigint.generateRandomKeys(128);
+            const { publicKey, privateKey } = await paillierBigint.generateRandomKeys(keyLength);
 
             // Define file paths for saving the public and private keys.
             const pubKeyPath = path.join(process.cwd(), 'data', `${name}-publicKey.json`);

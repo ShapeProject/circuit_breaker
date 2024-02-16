@@ -1,7 +1,7 @@
 // pages/api/decrypt.js
+import { readFile } from 'fs/promises';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as paillierBigint from 'paillier-bigint';
-import { readFile } from 'fs/promises';
 import path from 'path';
 
 // API endpoint for decrypting a given encrypted number using the Paillier cryptosystem.

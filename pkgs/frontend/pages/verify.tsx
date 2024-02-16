@@ -3,7 +3,6 @@ import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreValutForwarderJson from "@/contracts/mock/ScoreValutForwarder.sol/ScoreVaultForwarder.json";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
-import { ScoreVault, ScoreVaultForwarder } from "@/contracts/typechain-types";
 import { useEthersSigner } from "@/hooks/useEthersProvider";
 import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { getUint48 } from "@/utils/getUint48";
@@ -30,9 +29,9 @@ export default function Verify() {
 
     try {
       // create forwarder contract instance
-      const forwarder: ScoreVaultForwarder = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
+      const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
       // create ScoreValut contract instance
-      const scoreVault: ScoreVault = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
+      const scoreVault: any = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
       // get domain
       const domain = await forwarder.eip712Domain();
       // create callData for verify

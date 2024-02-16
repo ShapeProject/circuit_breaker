@@ -63,6 +63,7 @@ module.exports = {
         Primary30: "#665E75",
         Primary40: "#6E677A",
         Primary50: "#9691A0",
+        Primary60: "#E8E8ED",
         Input10: "#144F99",
         Input20: "#807C87",
         Input30: "#EBEFF5",

@@ -77,7 +77,7 @@ export default function Login() {
               <span className="text-2xl font-semibold">Trusted Score</span>
             </a>
           </div>
-          <div className="space-y-[6rem]">
+          <div className="h-1/3 flex flex-col justify-between space-y-4">
             <div>
               <h1 className="text-6xl font-medium">Trusted Score</h1>
             </div>

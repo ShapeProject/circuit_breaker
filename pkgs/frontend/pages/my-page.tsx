@@ -1,6 +1,6 @@
-import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
+import  StarRating  from "@/components/fiveStarRating/fiveStarRating";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import { ScoreCircle } from "@/components/scoreCircle";
+import ScoreCircle from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
@@ -49,18 +49,19 @@ export default function MyPage() {
                 <span className="w-full text-BodyMono text-right">13</span>
               </div>
             </div>
-            <FiveStarRating
-              value={4.1}
-              count={5}
+            <StarRating
+              rating={3.9}
+              maxStars={5}
               size={40}
             />
           </div>
         </div>
 
-        <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-
-          <ScoreCircle />
-          
+        <div className=" h-full w-fit relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
+          <ScoreCircle
+            score={85}
+            maxScore={100}
+          />
         </div>
 
 

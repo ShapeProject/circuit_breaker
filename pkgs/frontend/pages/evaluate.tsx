@@ -49,6 +49,7 @@ export default function Evaluate() {
       // console.log("domain:", domain);
       // create encodedFunctionData
       // @ts-ignore
+      console.log("暗号化前plainScore:", plainScore);
       const encRes = await fetch('/api/encrypt', {
         method: 'POST',
         headers: {
@@ -56,11 +57,13 @@ export default function Evaluate() {
         },
         body: JSON.stringify({
           name: sampleValue.name,
-          num: plainScore, 
+          num: plainScore.toString(), 
         }),
       });
       const encResJson = await encRes.json();
+      console.log("sampleValue.name:", sampleValue.name);
       console.log("encRes:", encResJson.encrypted);
+      setEncryptedScore(encResJson.encrypted);
   
       const getScoreRes = await readContract({
         address: SCOREVAULT_CONTRACT_ADDRESS,
@@ -74,23 +77,24 @@ export default function Evaluate() {
 
       // currentScoreが空文字か0の場合、別の処理を実行
       if (currentScore === '' || currentScore === '0' || BigInt(currentScore) === 0n) {
-        console.log("スコアは未設定または0です。別の処理を実行します。");
-        const enc0Res = await fetch('/api/encrypt', {
+        console.log("スコアは未設定または0です。別の処理を実行");
+        const encFirstRes = await fetch('/api/encrypt', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             name: sampleValue.name,
-            num: 0, 
+            num: encResJson.encrypted, 
           }),
         });
-        const enc0ResJson = await enc0Res.json();
-        console.log("encRes:", enc0ResJson.encrypted);
-        updateEncryptedScore = enc0ResJson.encrypted;
-        
+        const encFirstResJson = await encFirstRes.json();
+        console.log("encRes:", encFirstResJson.encrypted);
+        updateEncryptedScore = encFirstResJson.encrypted;
       } else {
         console.log(`現在のスコアは${currentScore}です。`);
+        console.log("currentScore:", currentScore);
+        console.log("encryptedScore:", encryptedScore);
         const addRes = await fetch('/api/add', {
           method: 'POST',
           headers: {
@@ -98,11 +102,12 @@ export default function Evaluate() {
           },
           body: JSON.stringify({
             name: sampleValue.name,
-            encNum1: encRes,
+            encNum1: encResJson.encrypted,
             encNum2: currentScore,
           }),
         });
         const addResJson = await addRes.json();
+        console.log("addResJson:", addResJson);
         console.log("addRes:", addResJson.encryptedSum);
         updateEncryptedScore = addResJson.encryptedSum;
     

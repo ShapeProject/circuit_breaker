@@ -13,8 +13,15 @@ export default function MyPage() {
   const [txCount, setTxCount] = useState(0);
   const [encrptedScore, setEncyrptedScore] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [totalScore, setToatalScore] = useState(0);
 
   const account = useAccount();
+
+  const sampleValue = {
+    name: "mame3",
+    totalScore: "6372169231563658595",
+    totalEvaluater: "121016624988591087",
+  }
 
   useEffect(() => {
     /**
@@ -29,9 +36,25 @@ export default function MyPage() {
           abi: ScoreValutJson.abi,
           functionName: "getScore",
           args: [account.address]
-        });
+        }) as any;
         console.log("result:", result);
-        // get txCount
+        const encryptedScore = result[0];
+
+        const decRes = await fetch('/api/decrypt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            encNum: encryptedScore, 
+          }),
+        });
+        console.log("sampleValue.name:", sampleValue.name);
+        const decResJson = await decRes.json();
+        console.log("decResJson:", decResJson.decrypted);
+
+        
         const res = await fetch('/api/getTxCount', {
           method: 'POST', 
           headers: {

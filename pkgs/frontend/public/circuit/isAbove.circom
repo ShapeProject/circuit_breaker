@@ -56,13 +56,13 @@ function powMod(x, e, m) {
 
 template ComputeRating() {
     signal input averageScore;
+    signal input lineNumber;
     signal output rating;
 
-    if (lineNumber >= averageScore) {
-        rating <== 0;
-    } else {
-        rating <== 1;
-    }
+    signal above;
+
+    above <-- (lineNumber <= averageScore);
+    rating <== 1 * above;
 }
 
 component main {public [totalScore, totalEvaluater, encryptionKeyN]} = Main();

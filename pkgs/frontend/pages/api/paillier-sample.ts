@@ -1,7 +1,7 @@
 // pages/api/paillier.js
-import type { NextApiRequest, NextApiResponse } from 'next'
-import * as paillierBigint from 'paillier-bigint';
 import * as bcu from 'bigint-crypto-utils';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import * as paillierBigint from 'paillier-bigint';
 
 function bigintReplacer(key: any, value: any) {
     if (typeof value === 'bigint') {
@@ -46,6 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const n = publicKey.n;
       const nn = publicKey._n2;
       const mu = privateKey.mu;
+      // @ts-ignore
       const denom = (bcu.modPow(encryptedSum, lambda, nn) - 1n) / n;
       const m = denom * mu % n;
       console.log(m.toString())

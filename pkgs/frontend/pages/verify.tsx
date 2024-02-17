@@ -12,6 +12,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccount, useSignTypedData } from "wagmi";
+import { readContract } from "@wagmi/core"
 
 export default function Verify() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +22,8 @@ export default function Verify() {
   // get Signer Instance
   const signer: any = useEthersSigner();
   const [score, setScore] = useState('');
+  const [to, setTo] = useState('');
+  console.log("score:", score);
 
   /**
    * verify method
@@ -28,6 +31,17 @@ export default function Verify() {
   const verify = async() => {
     setIsLoading(true);
     try {
+
+      const resRead = await readContract({
+        address: SCOREVAULT_CONTRACT_ADDRESS,
+        abi: ScoreValutJson.abi,
+        functionName: "getScore",
+        args: [to]
+      }) as any;
+      console.log("result:", resRead);
+      const encryptedTotalScore = resRead[0];
+      const encryptedCount = resRead[1];
+      console.log("encryptedTotalScore:", encryptedTotalScore);
        
       const sampleValue = {
         name: "mame3",
@@ -42,9 +56,10 @@ export default function Verify() {
         },
         body: JSON.stringify({
           name: sampleValue.name,
-          totalScore: sampleValue.totalScore,
-          totalEvaluater: sampleValue.totalEvaluater,
-          lineNumber: sampleValue.lineNumber,
+          totalScore: encryptedTotalScore,
+          totalEvaluater: "4982023261627043412",
+          // totalEvaluater: encryptedCount,
+          lineNumber: score,
         }),
       });
   
@@ -118,6 +133,8 @@ export default function Verify() {
                 autoCapitalize="off"
                 autoComplete="off"
                 icon="AddressIcon"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
               />
               <Input
                 labelText="Score"

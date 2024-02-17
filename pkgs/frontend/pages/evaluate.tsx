@@ -74,6 +74,25 @@ export default function Evaluate() {
       }) as any;
       console.log("getScoreRes:", getScoreRes[0]);
       const currentScore = getScoreRes[0];
+      
+      const count = getScoreRes[2] ?? 0;
+
+      const encCountRes = await fetch('/api/encrypt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: sampleValue.name,
+          num: count.toString(), 
+        }),
+      });
+      const encCountResJson = await encCountRes.json();
+      console.log("encRes:", encCountResJson.encrypted);
+      const encryptedCount = encCountResJson.encrypted;
+
+
+
       console.log("currentScore:", currentScore);
       let updateEncryptedScore;
 
@@ -122,7 +141,7 @@ export default function Evaluate() {
 
 
       // 1. number of encripted evaluater, 2 encripted evaluater
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, updateEncryptedScore, "0xtesttest"])
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, updateEncryptedScore, encryptedCount])
       // get unit48
       const uint48Time = getUint48();
       // create request data

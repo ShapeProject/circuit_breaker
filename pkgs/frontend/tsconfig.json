@@ -25,6 +25,11 @@
       ]
     }
   },
+<<<<<<< HEAD
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+=======
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -34,3 +39,4 @@
     "node_modules"
   ]
 }
+>>>>>>> main

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC } from "react";
 import StarIcon from "../Icons/StarIcon";
 
 interface StarRatingProps {
@@ -44,6 +44,7 @@ const StarRating: FC<StarRatingProps> = ({ maxStars, rating, size }) => {
     }
 
     return (
+        // eslint-disable-next-line react/jsx-key
         <div className="flex [&>div]:px-2.5">{stars}</div>
     );
 };

@@ -1,5 +1,4 @@
 import ScoreValutForwarderJson from "@/contracts/mock/ScoreValutForwarder.sol/ScoreVaultForwarder.json";
-import { ScoreVaultForwarder } from "@/contracts/typechain-types";
 import { FORWARDER_CONTRACT_ADDRESS } from "@/utils/contants";
 import {
   DefenderRelayProvider,
@@ -58,7 +57,7 @@ export default async function handler(
   // get relayer
   const relayer: any = await getRelayer();
   // create forwarder contract instance
-  const forwarder: ScoreVaultForwarder = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, relayer)) as any;
+  const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, relayer)) as any;
  
   try {
     // call verify method

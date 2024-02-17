@@ -50,6 +50,7 @@ export default function Evaluate() {
       // create encodedFunctionData
       // @ts-ignore
       console.log("暗号化前plainScore:", plainScore);
+      console.log("暗号化前plainScore.toString():", typeof(plainScore.toString()));
       const encRes = await fetch('/api/encrypt', {
         method: 'POST',
         headers: {
@@ -78,19 +79,19 @@ export default function Evaluate() {
       // currentScoreが空文字か0の場合、別の処理を実行
       if (currentScore === '' || currentScore === '0' || BigInt(currentScore) === 0n) {
         console.log("スコアは未設定または0です。別の処理を実行");
-        const encFirstRes = await fetch('/api/encrypt', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: sampleValue.name,
-            num: encResJson.encrypted, 
-          }),
-        });
-        const encFirstResJson = await encFirstRes.json();
-        console.log("encRes:", encFirstResJson.encrypted);
-        updateEncryptedScore = encFirstResJson.encrypted;
+        // const encFirstRes = await fetch('/api/encrypt', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     name: sampleValue.name,
+        //     num: encResJson.encrypted.toString(), 
+        //   }),
+        // });
+        // const encFirstResJson = await encFirstRes.json();
+        // console.log("encRes:", encFirstResJson.encrypted);
+        updateEncryptedScore = encResJson.encrypted;
       } else {
         console.log(`現在のスコアは${currentScore}です。`);
         console.log("currentScore:", currentScore);
@@ -102,8 +103,8 @@ export default function Evaluate() {
           },
           body: JSON.stringify({
             name: sampleValue.name,
-            encNum1: encResJson.encrypted,
-            encNum2: currentScore,
+            encNum1: encResJson.encrypted.toString(),
+            encNum2: currentScore.toString(),
           }),
         });
         const addResJson = await addRes.json();
@@ -115,6 +116,8 @@ export default function Evaluate() {
         //   throw new Error('Network response was not ok');
         // }
       }
+
+      console.log("updateEncryptedScore:", updateEncryptedScore);
 
 
       // 1. number of encripted evaluater, 2 encripted evaluater

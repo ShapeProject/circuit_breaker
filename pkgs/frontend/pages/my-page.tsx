@@ -53,7 +53,6 @@ export default function MyPage() {
         console.log("sampleValue.name:", sampleValue.name);
         const decResJson = await decRes.json();
         console.log("decResJson:", decResJson.decrypted);
-
         
         const res = await fetch('/api/getTxCount', {
           method: 'POST', 

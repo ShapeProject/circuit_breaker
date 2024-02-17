@@ -53,19 +53,8 @@ export default function MyPage() {
         const decResJson = await decRes.json();
         console.log("decResJson:", decResJson.decrypted);
         setToatalScore(decResJson.decrypted);
-        
-        const res = await fetch('/api/getTxCount', {
-          method: 'POST', 
-          headers: {
-            'Content-Type': 'application/json', 
-          },
-          body: JSON.stringify({
-            address: account.address
-          }),
-        });
-        const data = await res.json();
-        console.log("Tx Count:", data.txCount);
-        setTxCount(data.txCount);
+      
+        setTxCount(parseInt(result[2], 16));
       }
       setIsLoading(false);
     }

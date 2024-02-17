@@ -195,8 +195,66 @@ Decrypts an encrypted number using the generated private key.
   ```bash
   curl -X POST http://localhost:3000/api/decrypt -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum":"<put encNum>"}'
   ```
-
 This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
+
+### 4. Get Proof Detail
+
+Retrieves the details of a proof using its unique proof ID.
+
+- Endpoint: /api/getProofDetail
+- Method: POST
+- Request (req):
+  ```
+  { "proof_id": "<proof_id>" }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/getProofDetail -H "Content-Type: application/json" -d '{"proof_id":"<proof_id>"}'
+  ```
+
+### 5. Submit Proof Input
+
+Submits proof input for a circuit to generate a proof. This endpoint might typically be used to initiate the proving process for a specific circuit with given inputs.
+
+- Endpoint: /api/submitProofInput
+- Method: POST
+- Request (req):
+  ```
+  {
+  "name": "<your name>",
+  "totalScore": "<totalScore>",
+  "totalEvaluater": "<totalEvaluater>",
+  "lineNumber": "<lineNumber>"
+  }
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/submitProofInput -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'
+
+  ```
+
+### 6. Check If Above Threshold
+
+Checks if the calculated score is above a certain threshold. This endpoint might typically be used after submitting proof input and obtaining a proof to determine if the result meets a specific criterion.
+
+- Endpoint: /api/isAbove
+- Method: POST
+- Request (req):
+  ```
+  {
+  "name": "<your name>",
+  "totalScore": "<totalScore>",
+  "totalEvaluater": "<totalEvaluater>",
+  "lineNumber": "<lineNumber>"
+  }
+
+  ```
+- CURL Example:
+  ```bash
+  curl -X POST http://localhost:3000/api/isAbove -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'
+  ```
+
+These additions provide a comprehensive overview of the backend APIs, including operations for generating key pairs, encrypting numbers, adding encrypted numbers, decrypting numbers, and interacting with proofs. Remember to replace <your name>, <totalScore>, <totalEvaluater>, <lineNumber>, and <proof_id> placeholders with actual values relevant to your use case.
 
 ### References
 

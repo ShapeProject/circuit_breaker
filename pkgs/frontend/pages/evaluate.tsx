@@ -39,8 +39,6 @@ export default function Evaluate() {
    */
   const setScore = async() => {
     setIsLoading(true);
-    console.log("--------------------------------------------------------setScore")
-
     try {
       // create forwarder contract instance
       const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
@@ -48,6 +46,7 @@ export default function Evaluate() {
       const scoreVault: any = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
       // get domain
       const domain = await forwarder.eip712Domain();
+      // console.log("domain:", domain);
       // create encodedFunctionData
       // @ts-ignore
       const encRes = await fetch('/api/encrypt', {
@@ -60,33 +59,61 @@ export default function Evaluate() {
           num: plainScore, 
         }),
       });
-      console.log("encRes:", encRes);
+      const encResJson = await encRes.json();
+      console.log("encRes:", encResJson.encrypted);
   
       const getScoreRes = await readContract({
         address: SCOREVAULT_CONTRACT_ADDRESS,
         abi: ScoreValutJson.abi,
         functionName: "getScore",
         args: [to]
-      });
-      console.log("getScoreRes:", getScoreRes);
+      }) as any;
+      console.log("getScoreRes:", getScoreRes[0]);
+      const currentScore = getScoreRes[0];
+      let updateEncryptedScore;
 
-      const response = await fetch('/api/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: sampleValue.name,
-          encNum1: encRes,
-          encNum2: getScoreRes,
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      // currentScoreが空文字か0の場合、別の処理を実行
+      if (currentScore === '' || currentScore === '0' || BigInt(currentScore) === 0n) {
+        console.log("スコアは未設定または0です。別の処理を実行します。");
+        const enc0Res = await fetch('/api/encrypt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            num: 0, 
+          }),
+        });
+        const enc0ResJson = await enc0Res.json();
+        console.log("encRes:", enc0ResJson.encrypted);
+        updateEncryptedScore = enc0ResJson.encrypted;
+        
+      } else {
+        console.log(`現在のスコアは${currentScore}です。`);
+        const addRes = await fetch('/api/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            encNum1: encRes,
+            encNum2: currentScore,
+          }),
+        });
+        const addResJson = await addRes.json();
+        console.log("addRes:", addResJson.encryptedSum);
+        updateEncryptedScore = addResJson.encryptedSum;
+    
+        // if (!response.ok) {
+        //   throw new Error('Network response was not ok');
+        // }
       }
+
+
       // 1. number of encripted evaluater, 2 encripted evaluater
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, "0xtesttest"])
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, updateEncryptedScore, "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data

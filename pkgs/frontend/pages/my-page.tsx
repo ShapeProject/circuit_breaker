@@ -5,6 +5,7 @@ import { ScoreCircle } from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
+import { count } from "console";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
@@ -14,6 +15,7 @@ export default function MyPage() {
   const [encrptedScore, setEncyrptedScore] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [totalScore, setToatalScore] = useState(0);
+  const [averageScore, setAverageScore] = useState(0);
 
   const account = useAccount();
 
@@ -84,11 +86,19 @@ export default function MyPage() {
                     <span className="w-full text-BodyMono text-right">{txCount}</span>
                   </div>
                 </div>
-                <FiveStarRating
-                  value={txCount}
-                  count={5}
-                  size={40}
-                />
+                {txCount == 0 ? (
+                  <FiveStarRating
+                    value={0}
+                    count={5}
+                    size={40}
+                  />
+                ) : (
+                  <FiveStarRating
+                    value={totalScore/txCount}
+                    count={5}
+                    size={40}
+                  />
+                )}
               </div>
             </div>
             <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">

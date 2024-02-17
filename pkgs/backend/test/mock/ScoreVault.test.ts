@@ -156,6 +156,32 @@ describe("ScoreVault", function () {
       expect(result[2]).to.equal(1);
     });
 
+    it("update Score & get Score", async function () {
+      // deploy contract
+      const { owner, scoreVault } = await loadFixture(deployContract);
+      // sample data
+      const sampleCount = "0xsssgsete";
+      const sampleData = "0xsssgsete";
+      const sampleData2 = "0xsssgsete2"
+
+      // call setScoremethod
+      await scoreVault.setScore(await owner.getAddress(), sampleCount, sampleData);
+      // get score data 
+      const result = await scoreVault.getScore(owner.address);
+      // check
+      expect(result[0]).to.equal(sampleCount);
+      expect(result[1]).to.equal(sampleData);
+      expect(result[2]).to.equal(1);
+      // call setScoremethod
+      await scoreVault.setScore(await owner.getAddress(), sampleCount, sampleData2);
+      // get score data 
+      const result2 = await scoreVault.getScore(owner.address);
+      // check
+      expect(result2[0]).to.equal(sampleCount);
+      expect(result2[1]).to.equal(sampleData2);
+      expect(result2[2]).to.equal(2);
+    });
+
     it("verify proof", async function () {
       // deploy contract
       const { scoreVault } = await loadFixture(deployContract);

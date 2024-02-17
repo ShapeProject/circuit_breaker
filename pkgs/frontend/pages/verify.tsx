@@ -1,18 +1,14 @@
 import Input from "@/components/input/input";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import ScoreValutForwarderJson from "@/contracts/mock/ScoreValutForwarder.sol/ScoreVaultForwarder.json";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { useEthersSigner } from "@/hooks/useEthersProvider";
-import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
-import { getUint48 } from "@/utils/getUint48";
-import { ForwardRequest } from "@/utils/types";
-import { Contract } from "ethers";
+import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
+import { readContract } from "@wagmi/core";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccount, useSignTypedData } from "wagmi";
-import { readContract } from "@wagmi/core"
 
 export default function Verify() {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,8 +53,8 @@ export default function Verify() {
         body: JSON.stringify({
           name: sampleValue.name,
           totalScore: encryptedTotalScore,
-          totalEvaluater: "4982023261627043412",
-          // totalEvaluater: encryptedCount,
+          // totalEvaluater: "4982023261627043412",
+          totalEvaluater: encryptedCount,
           lineNumber: score,
         }),
       });

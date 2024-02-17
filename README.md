@@ -28,12 +28,16 @@
     And you need to fill below.
 
     ```txt
-    NEXT_PUBLIC_ENABLE_TESTNETS=true
-    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
-    NEXT_PUBLIC_SINDRI_API_KEY=""
-    SCROLLSCAN_API_KEY=""
-    DEFENDER_API_KEY=""
-    DEFENDER_SECRET_KEY=""
+    NEXT_PUBLIC_ENABLE_TESTNETS=
+    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=
+    SCROLLSCAN_API_KEY=
+    DEFENDER_API_KEY=
+    DEFENDER_SECRET_KEY=
+    BEARER_TOKEN=
+    KEY_LENGTH=
+    BACKEND_API_URL=
+    CIRCUIT_ID=
+    SINDRI_API_ENDPOINT=
     ```
 
 - install
@@ -195,7 +199,7 @@ Decrypts an encrypted number using the generated private key.
   ```bash
   curl -X POST http://localhost:3000/api/decrypt -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum":"<put encNum>"}'
   ```
-This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
+  This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
 
 ### 4. Get Proof Detail
 
@@ -228,6 +232,7 @@ Submits proof input for a circuit to generate a proof. This endpoint might typic
   }
   ```
 - CURL Example:
+
   ```bash
   curl -X POST http://localhost:3000/api/submitProofInput -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'
 
@@ -240,6 +245,7 @@ Checks if the calculated score is above a certain threshold. This endpoint might
 - Endpoint: /api/isAbove
 - Method: POST
 - Request (req):
+
   ```
   {
   "name": "<your name>",
@@ -249,6 +255,7 @@ Checks if the calculated score is above a certain threshold. This endpoint might
   }
 
   ```
+
 - CURL Example:
   ```bash
   curl -X POST http://localhost:3000/api/isAbove -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'

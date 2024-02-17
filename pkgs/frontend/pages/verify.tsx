@@ -20,93 +20,82 @@ export default function Verify() {
   const { signTypedDataAsync } = useSignTypedData();
   // get Signer Instance
   const signer: any = useEthersSigner();
+  const [score, setScore] = useState('');
+  console.log("score: ", score)
 
   /**
    * verify method
    */
   const verify = async() => {
     setIsLoading(true);
-
     try {
-      // create forwarder contract instance
-      const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
-      // create ScoreValut contract instance
-      const scoreVault: any = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
-      // get domain
-      const domain = await forwarder.eip712Domain();
-      // create callData for verify
-      const res: any = await fetch('/api/generateProof');
-      const result = await res.json();
-      // crate encodedFunctionData
-      const encodedData: any = scoreVault.interface.encodeFunctionData("verifyProof",[result.a, result.b, result.c, result.input])
-      // get unit48
-      const uint48Time = getUint48();
-      // create request data
-      const sig = await signTypedDataAsync({
-        domain: {
-          name: domain[1],
-          version: domain[2],
-          chainId: 534351, // scroll sepolia
-          verifyingContract: domain[4] as any
-        },
-        types: { 
-          'ForwardRequest': ForwardRequest 
-        },
-        primaryType:'ForwardRequest',
-        message: {
-          from: account.address,
-          to: SCOREVAULT_CONTRACT_ADDRESS,
-          value: 0,
-          gas: 360000,
-          nonce: await forwarder.nonces(account.address!),
-          deadline: uint48Time,
-          data: encodedData
-        },
-      });
-      // call requestRelayer API 
-      const gaslessResult = await fetch('/api/requestRelayer', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({
-          from: account.address,
-          to: SCOREVAULT_CONTRACT_ADDRESS,
-          value: 0,
-          gas: 360000,
-          nonce: (await forwarder.nonces(account.address!)).toString(),
-          deadline: uint48Time.toString(),
-          data: encodedData,
-          signature: sig
-        }),
-      });
-
-      console.log(await gaslessResult.json())
-      toast.success('🦄 Success!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    } catch(err: any) {
-      console.error("err:", err);
-      toast.error('Failed...', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+       
+      const sampleValue = {
+        name: "mame3",
+        totalScore: "6372169231563658595",
+        totalEvaluater: "121016624988591087",
+        lineNumber: "10",
+      };
+      const response = await fetch('/api/isAbove', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            totalScore: sampleValue.totalScore,
+            totalEvaluater: sampleValue.totalEvaluater,
+            lineNumber: score,
+          }),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const result = await response.json();
+        console.log(result); // ここで取得した結果を使用する
+        // 例: 結果に応じてUIを更新
+        if (result.isAbove) {
+          console.log("結果は上です。");
+          toast.success('🦄 Above the Score!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          console.log("結果は下または同等です。");
+          toast.success('🦄 Under the score...', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        toast.error('Failed...', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } finally {
+        setIsLoading(false);
+      }
   }
 
   return (
@@ -139,6 +128,8 @@ export default function Verify() {
                 autoCapitalize="off"
                 autoComplete="off"
                 icon="ScoreIcon"
+                value={score}
+                onChange={(e) => setScore(e.target.value)}
               />
             </div>
             <div>

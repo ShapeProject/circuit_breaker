@@ -5,7 +5,6 @@ import { ScoreCircle } from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
-import { count } from "console";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
@@ -94,7 +93,7 @@ export default function MyPage() {
                   />
                 ) : (
                   <FiveStarRating
-                    value={totalScore/txCount}
+                    value={(totalScore/txCount)/20}
                     count={5}
                     size={40}
                   />

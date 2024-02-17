@@ -12,22 +12,34 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccount, useSignTypedData } from "wagmi";
+import { readContract } from "@wagmi/core"
 
 
 export default function Evaluate() {
   const [isLoading, setIsLoading] = useState(false);
   const [txCount, setTxCount] = useState(0);
+  const [to, setTo] = useState('');
+  const [plainScore, setPlainScore] = useState("");
+  const [encryptedScore, setEncryptedScore] = useState('');
 
   const account = useAccount();
   const { signTypedDataAsync } = useSignTypedData();
   // get Signer Instance
   const signer: any = useEthersSigner();
+  console.log("to:", to);
+  console.log("plainScore:", plainScore);
+  const sampleValue = {
+    name: "mame3",
+    totalScore: "6372169231563658595",
+    totalEvaluater: "121016624988591087",
+  }
 
   /**
    * setScore method
    */
   const setScore = async() => {
     setIsLoading(true);
+    console.log("--------------------------------------------------------setScore")
 
     try {
       // create forwarder contract instance
@@ -38,7 +50,43 @@ export default function Evaluate() {
       const domain = await forwarder.eip712Domain();
       // create encodedFunctionData
       // @ts-ignore
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, "0xtesttest", "0xtesttest"])
+      const encRes = await fetch('/api/encrypt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: sampleValue.name,
+          num: plainScore, 
+        }),
+      });
+      console.log("encRes:", encRes);
+  
+      const getScoreRes = await readContract({
+        address: SCOREVAULT_CONTRACT_ADDRESS,
+        abi: ScoreValutJson.abi,
+        functionName: "getScore",
+        args: [to]
+      });
+      console.log("getScoreRes:", getScoreRes);
+
+      const response = await fetch('/api/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: sampleValue.name,
+          encNum1: encRes,
+          encNum2: getScoreRes,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // 1. number of encripted evaluater, 2 encripted evaluater
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data
@@ -154,6 +202,8 @@ export default function Evaluate() {
                   autoCapitalize="off"
                   autoComplete="off"
                   icon="AddressIcon"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
                 />
                 <Input
                   labelText="Score"
@@ -163,6 +213,8 @@ export default function Evaluate() {
                   autoCapitalize="off"
                   autoComplete="off"
                   icon="ScoreIcon"
+                  value={plainScore}
+                  onChange={(e) => setPlainScore(e.target.value)}
                 />
               </div>
 

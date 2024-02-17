@@ -21,7 +21,6 @@ export default function Verify() {
   // get Signer Instance
   const signer: any = useEthersSigner();
   const [score, setScore] = useState('');
-  console.log("score: ", score)
 
   /**
    * verify method
@@ -37,53 +36,28 @@ export default function Verify() {
         lineNumber: "10",
       };
       const response = await fetch('/api/isAbove', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: sampleValue.name,
-            totalScore: sampleValue.totalScore,
-            totalEvaluater: sampleValue.totalEvaluater,
-            lineNumber: score,
-          }),
-        });
-    
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-    
-        const result = await response.json();
-        console.log(result); // ここで取得した結果を使用する
-        // 例: 結果に応じてUIを更新
-        if (result.isAbove) {
-          console.log("結果は上です。");
-          toast.success('🦄 Above the Score!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        } else {
-          console.log("結果は下または同等です。");
-          toast.success('🦄 Under the score...', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        toast.error('Failed...', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: sampleValue.name,
+          totalScore: sampleValue.totalScore,
+          totalEvaluater: sampleValue.totalEvaluater,
+          lineNumber: sampleValue.lineNumber,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const result = await response.json();
+      console.log(result); // ここで取得した結果を使用する
+      // 例: 結果に応じてUIを更新
+      if (result.isAbove) {
+        console.log("結果は上です。");
+        toast.success('🦄 Above the Score!', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -93,10 +67,35 @@ export default function Verify() {
           progress: undefined,
           theme: "colored",
         });
-      } finally {
-        setIsLoading(false);
+      } else {
+        console.log("結果は下または同等です。");
+        toast.success('🦄 Under the score...', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
-  }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+      toast.error('Failed...', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+}
 
   return (
     <div className="h-screen w-screen flex flex-row bg-white">

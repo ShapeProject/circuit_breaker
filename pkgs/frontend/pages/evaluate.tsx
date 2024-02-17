@@ -74,10 +74,11 @@ export default function Evaluate() {
       }) as any;
       console.log("getScoreRes:", getScoreRes[0]);
       const currentScore = getScoreRes[0];
+      console.log("currentScore:", currentScore);
       let updateEncryptedScore;
 
       // currentScoreが空文字か0の場合、別の処理を実行
-      if (currentScore === '' || currentScore === '0' || BigInt(currentScore) === 0n) {
+      if (currentScore === '' || currentScore === '0') {
         console.log("スコアは未設定または0です。別の処理を実行");
         // const encFirstRes = await fetch('/api/encrypt', {
         //   method: 'POST',

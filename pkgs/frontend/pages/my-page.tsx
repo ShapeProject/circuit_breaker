@@ -50,9 +50,9 @@ export default function MyPage() {
             encNum: encryptedScore, 
           }),
         });
-        console.log("sampleValue.name:", sampleValue.name);
         const decResJson = await decRes.json();
         console.log("decResJson:", decResJson.decrypted);
+        setToatalScore(decResJson.decrypted);
         
         const res = await fetch('/api/getTxCount', {
           method: 'POST', 
@@ -88,7 +88,7 @@ export default function MyPage() {
                 <div className="px-10 py-6 space-y-10">
                   <div className="space-y-6 flex flex-col">
                     <span className="text-BodyStrong text-Primary40">Total Score</span>
-                    <span className="w-full text-BodyMono text-right">1,105</span>
+                    <span className="w-full text-BodyMono text-right">{totalScore}</span>
                   </div>
                   <div className="space-y-6 flex flex-col">
                     <span className="text-BodyStrong text-Primary40">Received</span>

@@ -12,11 +12,11 @@ export const FiveStarRating: FC<PropsType> = ({ count, value, size, }: PropsType
     const avg = (value / count) * 100;
 
     return (
-        <>
-            <div className="relative w-fit">
-                <ul 
-                className="absolute top-0 left-0 z-10 flex flex-row items-center space-x-1 overflow-hidden" 
-                style={{ width: `${avg}%` }}>
+        <div className="w-fit rounded-2xl mx-auto px-8 py-4 border border-Primary10">
+            <div className="relative w-full [&>ul]:w-full [&>ul]:flex [&>ul]:flex-row [&>ul]:items-center">
+                <ul
+                    className="absolute top-0 left-0 z-10 overflow-hidden"
+                    style={{ width: `${avg}%` }}>
                     {...Array.from({ length: count }, (_, index) => (
                         // eslint-disable-next-line react/jsx-key
                         <li>
@@ -25,7 +25,7 @@ export const FiveStarRating: FC<PropsType> = ({ count, value, size, }: PropsType
                     ))}
                 </ul>
 
-                <ul className="flex flex-row items-center space-x-1">
+                <ul>
                     {...Array.from({ length: count }, (_, index) => (
                         // eslint-disable-next-line react/jsx-key
                         <li>
@@ -34,6 +34,6 @@ export const FiveStarRating: FC<PropsType> = ({ count, value, size, }: PropsType
                     ))}
                 </ul>
             </div>
-        </>
+        </div>
     );
 };

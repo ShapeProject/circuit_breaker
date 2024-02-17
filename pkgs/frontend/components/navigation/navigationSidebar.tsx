@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import MyPageIcon from "@/components/Icons/MyPageIcon";
 import EvaluateIcon from "@/components/Icons/EvaluateIcon";
 import VerifyIcon from "@/components/Icons/VerifyIcon";

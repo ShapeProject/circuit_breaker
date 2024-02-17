@@ -1,5 +1,7 @@
 # circuit_breaker
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/98251463-ba7b-4c62-aef5-4d32331d7bd4/deploy-status)](https://app.netlify.com/sites/glittering-trifle-3243ed/deploys)
+
 ## Deployed Contracts Info
 
 | Conract Name | Address                                                                                                                         | Network        |

@@ -4,7 +4,7 @@
 
 | Conract Name | Address                                                                                                                         | Network        |
 | :----------- | :------------------------------------------------------------------------------------------------------------------------------ | :------------- |
-| ScoreValut   | [0x505869E3B5Ef52a5Db123387fe2d188c44b27b25](https://sepolia.scrollscan.dev/address/0x505869E3B5Ef52a5Db123387fe2d188c44b27b25) | Scroll Sepolia |
+| ScoreValut   | [0x177acf501eF7d2b090d94fd3bd2BE773736598E1](https://sepolia.scrollscan.dev/address/0x177acf501eF7d2b090d94fd3bd2BE773736598E1) | Scroll Sepolia |
 | Forwarder    | [0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5](https://sepolia.scrollscan.dev/address/0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5) | Scroll Sepolia |
 | Verifier     | [0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069](https://sepolia.scrollscan.dev/address/0x819cb57caeee4d4d10dd583ffae5df4094ebb069) | Scroll Sepolia |
 

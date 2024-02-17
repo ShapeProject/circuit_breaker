@@ -45,7 +45,7 @@ const StarRating: FC<StarRatingProps> = ({ maxStars, rating, size }) => {
 
     return (
         // eslint-disable-next-line react/jsx-key
-        <div className="flex [&>div]:px-2.5">{stars}</div>
+        <div className="flex [&>div]:mx-2.5">{stars}</div>
     );
 };
 

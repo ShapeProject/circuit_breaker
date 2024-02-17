@@ -58,7 +58,7 @@ const Input: React.FC<InputProps> = ({
                 </span>
                 <div className="relative h-8 w-InputWidth">
                   <input
-                    className={`absolute -bottom-5 text-Input bg-transparent border-0 outline-0`}
+                    className={`w-full absolute -bottom-5 text-Input bg-transparent border-0 outline-0`}
                     id={id}
                     type={type}
                     autoCorrect={autoCorrect}

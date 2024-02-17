@@ -153,6 +153,7 @@ describe("ScoreVault", function () {
       // check
       expect(result[0]).to.equal(sampleCount);
       expect(result[1]).to.equal(sampleData);
+      expect(result[2]).to.equal(1);
     });
 
     it("verify proof", async function () {
@@ -239,6 +240,51 @@ describe("ScoreVault", function () {
       const afterBalance = await owner.provider.getBalance(owner.address);
       // check
       expect(beforeBalance).to.equal(afterBalance);
+    });
+
+    it("gasless setScore", async function () {
+      const { 
+        scoreVault, 
+        forwarder, 
+        owner, 
+        otherAccount 
+      } = await loadFixture(deployContract);
+
+      // sample data
+      const sampleCount = "0xsssgsete";
+      const sampleData = "0xsssgsete"
+      // create encode function data
+      const data = scoreVault.interface.encodeFunctionData("setScore", [
+        await owner.getAddress(),
+        sampleCount,
+        sampleData
+      ]);
+      // get domain
+      const domain = await forwarder.eip712Domain();
+      // creat request data
+      const request = await createRequestData(
+        forwarder,
+        domain,
+        owner,
+        await scoreVault.getAddress(),
+        data
+      );
+      // get balance before call function
+      const beforeBalance = await owner.provider.getBalance(owner.address);
+      // call forwarderContract's function from Relayer
+      await callForwardMethodFromRelayer(otherAccount, forwarder, request);
+      // get balance after call function
+      const afterBalance = await owner.provider.getBalance(owner.address);
+      // check
+      expect(beforeBalance).to.equal(afterBalance);
+      // call setScoremethod
+      await scoreVault.setScore(await owner.getAddress(), sampleCount, sampleData);
+      // get score data 
+      const result = await scoreVault.getScore(owner.address);
+      // check
+      expect(result[0]).to.equal(sampleCount);
+      expect(result[1]).to.equal(sampleData);
+      expect(result[2]).to.equal(2);
     });
   });
 });

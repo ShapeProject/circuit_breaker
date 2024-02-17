@@ -1,3 +1,4 @@
+import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
@@ -6,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function MyPage() {
-  
+  const [txCount, setTxCount] = useState(0);
   const [encrptedScore, setEncyrptedScore] = useState("");
 
   const account = useAccount();
@@ -25,6 +26,19 @@ export default function MyPage() {
           args: [account.address]
         });
         console.log("result:", result);
+        // get txCount
+        const res = await fetch('/api/getTxCount', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify({
+            address: account.address
+          }),
+        });
+        const data = await res.json();
+        console.log("Tx Count:", data.txCount);
+        setTxCount(data.txCount);
       }
     }
     init();
@@ -43,21 +57,25 @@ export default function MyPage() {
             </div>
             <div className="space-y-6 flex flex-col">
               <span className="text-BodyStrong text-Primary40">Received</span>
-              <span className="w-64 text-BodyMono text-right">13</span>
+              <span className="w-64 text-BodyMono text-right">{txCount}</span>
             </div>
           </div>
-          <div>★★★★★</div>
+          <FiveStarRating
+          value={3.2}
+          count = {txCount}
+          size={40}
+          />
         </div>
         <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
           <div className="h-full aspect-square rounded-full bg-Gray30">
             <div className="h-68pct aspect-square rounded-full bg-white shadow-md">
               <div className="h-89pct aspect-square rounded-full border-40 border-Gray20 border-dashed">
                 <div className="h-92pct aspect-square rounded-full border-24 border-Gray20">
-                <div className="h-92pct aspect-square rounded-full border-12 border-Gray20">
-                  <div className="h-92pct aspect-square rounded-full bg-Primary10 shadow-lg">
-                    <span className="font-mono text-AvgScore text-white">85</span>
+                  <div className="h-92pct aspect-square rounded-full border-12 border-Gray20">
+                    <div className="h-92pct aspect-square rounded-full bg-Primary10 shadow-lg">
+                      <span className="font-mono text-AvgScore text-white">85</span>
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>

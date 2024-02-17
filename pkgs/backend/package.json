@@ -9,7 +9,7 @@
     "compile": "hardhat compile",
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
     "deploy:scrollSepolia": "hardhat run scripts/deploy.ts --network scrollSepolia",
-    "verify:scrollSepolia": "hardhat verify 0xF09d5a398239b32071c33945bFcdA29BCb0B842A --network scrollSepolia 0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069 0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5",
+    "verify:scrollSepolia": "hardhat verify 0x505869E3B5Ef52a5Db123387fe2d188c44b27b25 --network scrollSepolia 0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069 0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5",
     "deploy:mock:scrollSepolia": "hardhat run scripts/mock/deploy.ts --network scrollSepolia",
     "script:verify:mock:scrollSepolia": "hardhat run scripts/mock/verify.ts --network scrollSepolia",
     "script:gaslessVerify:mock:scrollSepolia": "hardhat run scripts/mock/relay/gaslessVerify.ts --network scrollSepolia",

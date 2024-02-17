@@ -74,8 +74,8 @@ export default function MyPage() {
                   </div>
                 </div>
                 <FiveStarRating
-                  value={4.1}
-                  count={txCount}
+                  value={txCount}
+                  count={5}
                   size={40}
                 />
               </div>

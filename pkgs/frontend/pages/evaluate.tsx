@@ -38,7 +38,7 @@ export default function Evaluate() {
       const domain = await forwarder.eip712Domain();
       // create encodedFunctionData
       // @ts-ignore
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, 4, "0xtesttest"])
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, "0xtesttest", "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data

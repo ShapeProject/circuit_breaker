@@ -1,7 +1,13 @@
 
+type ScoreCircleType = {
+    total: number,
+    count: number
+}
 
-export const ScoreCircle = () => {
-
+export const ScoreCircle = ({ 
+    total,
+    count
+}: ScoreCircleType) => {
 
     return (
         <>
@@ -12,7 +18,15 @@ export const ScoreCircle = () => {
                     <circle cx="340" cy="340" r="186" stroke="#ECECF1" stroke-width="12" />
                 </svg>
                 <div className="absolute h-31pct aspect-square rounded-full bg-Primary10 shadow-lg">
-                    <span className="font-mono text-AvgScore text-white">85</span>
+                    {count == 0 ? (
+                        <span className="font-mono text-AvgScore text-white">
+                            0
+                        </span>
+                    ) : (
+                        <span className="font-mono text-AvgScore text-white">
+                            {total/count}
+                        </span>
+                    )}
                 </div>
 
                 <div className="absolute w-full h-full aspect-square rounded-ful">

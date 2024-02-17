@@ -92,7 +92,10 @@ export default function MyPage() {
               </div>
             </div>
             <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-              <ScoreCircle />
+              <ScoreCircle 
+                total={totalScore}
+                count={txCount}
+              />
             </div>
           </>
         )}

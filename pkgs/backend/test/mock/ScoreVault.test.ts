@@ -143,7 +143,7 @@ describe("ScoreVault", function () {
       // deploy contract
       const { owner, scoreVault } = await loadFixture(deployContract);
       // sample data
-      const sampleCount = 1;
+      const sampleCount = "0xsssgsete";
       const sampleData = "0xsssgsete"
 
       // call setScoremethod
@@ -151,7 +151,7 @@ describe("ScoreVault", function () {
       // get score data 
       const result = await scoreVault.getScore(owner.address);
       // check
-      expect(parseInt(result[0].toString(), 16)).to.equal(sampleCount);
+      expect(result[0]).to.equal(sampleCount);
       expect(result[1]).to.equal(sampleData);
     });
 

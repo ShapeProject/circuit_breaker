@@ -1,7 +1,9 @@
+
+import  StarRating  from "@/components/fiveStarRating/fiveStarRating";
 import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import { ScoreCircle } from "@/components/scoreCircle";
+import ScoreCircle from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
@@ -108,7 +110,6 @@ export default function MyPage() {
             </div>
           </>
         )}
-        
       </div>
     </div>
   );

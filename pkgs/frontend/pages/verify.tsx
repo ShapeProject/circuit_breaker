@@ -2,24 +2,17 @@ import Input from "@/components/input/input";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
-import { useEthersSigner } from "@/hooks/useEthersProvider";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAccount, useSignTypedData } from "wagmi";
 
 export default function Verify() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const account = useAccount();
-  const { signTypedDataAsync } = useSignTypedData();
-  // get Signer Instance
-  const signer: any = useEthersSigner();
   const [score, setScore] = useState('');
   const [to, setTo] = useState('');
-  console.log("score:", score);
 
   /**
    * verify method
@@ -45,6 +38,7 @@ export default function Verify() {
         totalEvaluater: "121016624988591087",
         lineNumber: "10",
       };
+      console.log("score:", score);
       const response = await fetch('/api/isAbove', {
         method: 'POST',
         headers: {

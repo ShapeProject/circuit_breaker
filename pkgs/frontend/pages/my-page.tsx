@@ -1,6 +1,5 @@
 
-import  StarRating  from "@/components/fiveStarRating/fiveStarRating";
-import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
+import FiveStarRating from "@/components/fiveStarRating/fiveStarRating";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreCircle from "@/components/scoreCircle";
@@ -89,24 +88,31 @@ export default function MyPage() {
                 </div>
                 {txCount == 0 ? (
                   <FiveStarRating
-                    value={0}
-                    count={5}
+                    maxStars={5}
+                    rating={0}
                     size={40}
                   />
                 ) : (
                   <FiveStarRating
-                    value={(totalScore/txCount)/20}
-                    count={5}
+                    maxStars={5}
+                    rating={(totalScore/txCount)/20}
                     size={40}
                   />
                 )}
               </div>
             </div>
             <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-              <ScoreCircle 
-                total={totalScore}
-                count={txCount}
-              />
+              {txCount == 0 ? (
+                <ScoreCircle 
+                  score={0}
+                  maxScore={0}
+                />
+              ) : (
+                <ScoreCircle 
+                  score={(totalScore/txCount)}
+                  maxScore={totalScore}
+                />
+              )}
             </div>
           </>
         )}

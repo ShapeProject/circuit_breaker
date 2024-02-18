@@ -7,12 +7,12 @@ import { useEthersSigner } from "@/hooks/useEthersProvider";
 import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { getUint48 } from "@/utils/getUint48";
 import { ForwardRequest } from "@/utils/types";
+import { readContract } from "@wagmi/core";
 import { Contract } from "ethers";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccount, useSignTypedData } from "wagmi";
-import { readContract } from "@wagmi/core"
 
 
 export default function Evaluate() {
@@ -258,7 +258,7 @@ export default function Evaluate() {
                   autoComplete="off"
                   icon="AddressIcon"
                   value={to}
-                  onChange={(e) => setTo(e.target.value)}
+                  onChange={setTo}
                 />
                 <Input
                   labelText="Score"
@@ -269,7 +269,7 @@ export default function Evaluate() {
                   autoComplete="off"
                   icon="ScoreIcon"
                   value={plainScore}
-                  onChange={(e) => setPlainScore(e.target.value)}
+                  onChange={setPlainScore}
                 />
               </div>
 

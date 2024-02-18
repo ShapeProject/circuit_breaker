@@ -130,7 +130,7 @@ export default function Verify() {
                 autoComplete="off"
                 icon="AddressIcon"
                 value={to}
-                onChange={(e) => setTo(e.target.value)}
+                onChange={setTo}
               />
               <Input
                 labelText="Score"
@@ -141,7 +141,7 @@ export default function Verify() {
                 autoComplete="off"
                 icon="ScoreIcon"
                 value={score}
-                onChange={(e) => setScore(e.target.value)}
+                onChange={setScore}
               />
             </div>
             <div>

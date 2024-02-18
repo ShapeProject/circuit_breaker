@@ -9,6 +9,8 @@ type InputProps = {
   autoCapitalize: string;
   autoComplete: string;
   icon: any;
+  value: any;
+  onChange: any;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -18,17 +20,14 @@ const Input: React.FC<InputProps> = ({
   autoCorrect,
   autoCapitalize,
   autoComplete,
-  icon
+  icon,
+  value,
+  onChange
 }) => {
-  const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleInputFocus = () => {
     setIsInputFocused(true);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
   };
 
   return (
@@ -49,7 +48,7 @@ const Input: React.FC<InputProps> = ({
                 <span
                   className={`absolute ${isInputFocused 
                     ? "-top-1 text-InputLabelFocus text-Input10"
-                    : inputValue
+                    : value
                       ? "-top-1 text-InputLabelFocus text-Input20"
                       : "top-1/2 -translate-y-1/2 text-InputLabel text-Input20"
                     }`}
@@ -66,8 +65,8 @@ const Input: React.FC<InputProps> = ({
                     autoComplete={autoComplete}
                     onFocus={handleInputFocus}
                     onBlur={() => setIsInputFocused(false)}
-                    value={inputValue}
-                    onChange={handleInputChange}
+                    value={value}
+                    onChange={(e:any) => onChange(e.target.value)}
                   />
                 </div>
               </div>

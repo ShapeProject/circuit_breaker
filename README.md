@@ -1,5 +1,9 @@
 # circuit_breaker
 
+<div align="center">
+  <img width="200" src="./pkgs/docs//img/icon.png"/>
+</div>
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/98251463-ba7b-4c62-aef5-4d32331d7bd4/deploy-status)](https://app.netlify.com/sites/glittering-trifle-3243ed/deploys)
 
 ## Deployed Contracts Info
@@ -274,6 +278,14 @@ Checks if the calculated score is above a certain threshold. This endpoint might
   ```
 
 These additions provide a comprehensive overview of the backend APIs, including operations for generating key pairs, encrypting numbers, adding encrypted numbers, decrypting numbers, and interacting with proofs. Remember to replace <your name>, <totalScore>, <totalEvaluater>, <lineNumber>, and <proof_id> placeholders with actual values relevant to your use case.
+
+## ScreenShots
+
+![](./pkgs/docs/img/screen1.png);
+![](./pkgs/docs/img/screen2.png);
+![](./pkgs/docs/img/screen3.png);
+![](./pkgs/docs/img/screen4.png);
+![](./pkgs/docs/img/screen5.png);
 
 ### References
 

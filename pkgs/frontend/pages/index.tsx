@@ -96,7 +96,11 @@ export default function Login() {
             </div>
           </div>
           <div className="flex flex-row space-x-6">
-            <a href="#" className="group">
+            <a 
+              href="https://twitter.com/Shape_ProjectJa" 
+              target="_blank"
+              className="group"
+            >
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50"
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +110,11 @@ export default function Login() {
               </svg>
             </a>
 
-            <a href="#" className="group">
+            <a 
+              href="https://github.com/ShapeProject/circuit_breaker" 
+              target="_blank"
+              className="group"
+            >
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50"
                 xmlns="http://www.w3.org.2000/svg"

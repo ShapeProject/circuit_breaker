@@ -1,7 +1,7 @@
 # circuit_breaker
 
 <div align="center">
-  <img width="200" src="./pkgs/docs//img/icon2.png"/>
+  <img src="./pkgs/docs/img/CoverImage_01_2024.02.18.jpg"/>
 </div>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/98251463-ba7b-4c62-aef5-4d32331d7bd4/deploy-status)](https://app.netlify.com/sites/glittering-trifle-3243ed/deploys)

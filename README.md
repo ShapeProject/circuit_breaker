@@ -1,12 +1,24 @@
 # circuit_breaker
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/98251463-ba7b-4c62-aef5-4d32331d7bd4/deploy-status)](https://app.netlify.com/sites/glittering-trifle-3243ed/deploys)
+
 ## Deployed Contracts Info
 
 | Conract Name | Address                                                                                                                         | Network        |
 | :----------- | :------------------------------------------------------------------------------------------------------------------------------ | :------------- |
-| ScoreValut   | [0xacff3BF500e0E9F7734D39064B290873d80Fe749](https://sepolia.scrollscan.dev/address/0xacff3BF500e0E9F7734D39064B290873d80Fe749) | Scroll Sepolia |
+| ScoreValut   | [0x177acf501eF7d2b090d94fd3bd2BE773736598E1](https://sepolia.scrollscan.dev/address/0x177acf501eF7d2b090d94fd3bd2BE773736598E1) | Scroll Sepolia |
 | Forwarder    | [0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5](https://sepolia.scrollscan.dev/address/0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5) | Scroll Sepolia |
 | Verifier     | [0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069](https://sepolia.scrollscan.dev/address/0x819cb57caeee4d4d10dd583ffae5df4094ebb069) | Scroll Sepolia |
+
+## OpenZeppelin Defender Info
+
+| No. | Address                                                                                                                         | Network        |
+| :-- | :------------------------------------------------------------------------------------------------------------------------------ | :------------- |
+| 1   | [0x1B38AB190EDf2bb4BcB2EC0b6639426731861581](https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581) | Scroll Sepolia |
+
+## Created Ciruit
+
+Circuit ID: 96ddd389-8412-4fa1-9033-1c608bbde247
 
 ## How to work
 
@@ -28,12 +40,16 @@
     And you need to fill below.
 
     ```txt
-    NEXT_PUBLIC_ENABLE_TESTNETS=true
-    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
-    NEXT_PUBLIC_SINDRI_API_KEY=""
-    SCROLLSCAN_API_KEY=""
-    DEFENDER_API_KEY=""
-    DEFENDER_SECRET_KEY=""
+    NEXT_PUBLIC_ENABLE_TESTNETS=
+    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=
+    SCROLLSCAN_API_KEY=
+    DEFENDER_API_KEY=
+    DEFENDER_SECRET_KEY=
+    BEARER_TOKEN=
+    KEY_LENGTH=
+    BACKEND_API_URL=
+    CIRCUIT_ID=
+    SINDRI_API_ENDPOINT=
     ```
 
 - install
@@ -51,7 +67,7 @@
 - frontend run
 
   ```bash
-  yarn build:dev
+  yarn frontend:dev
   ```
 
 - smartcontract compile
@@ -195,9 +211,9 @@ Decrypts an encrypted number using the generated private key.
   ```bash
   curl -X POST http://localhost:3000/api/decrypt -H "Content-Type: application/json" -d '{"name":"<your name>", "encNum":"<put encNum>"}'
   ```
-This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
+  This structured format provides a clear, concise description of each API endpoint, including the HTTP method used, a brief description, the request body format, and an example curl command to test the endpoint. Adjust the <your name>, <put number>, <put encNum1>, and <put encNum2> placeholders as necessary to match your actual use case.
 
-### 4. Get Proof Detail
+### 5. Get Proof Detail
 
 Retrieves the details of a proof using its unique proof ID.
 
@@ -212,7 +228,7 @@ Retrieves the details of a proof using its unique proof ID.
   curl -X POST http://localhost:3000/api/getProofDetail -H "Content-Type: application/json" -d '{"proof_id":"<proof_id>"}'
   ```
 
-### 5. Submit Proof Input
+### 6. Submit Proof Input
 
 Submits proof input for a circuit to generate a proof. This endpoint might typically be used to initiate the proving process for a specific circuit with given inputs.
 
@@ -228,18 +244,20 @@ Submits proof input for a circuit to generate a proof. This endpoint might typic
   }
   ```
 - CURL Example:
+
   ```bash
   curl -X POST http://localhost:3000/api/submitProofInput -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'
 
   ```
 
-### 6. Check If Above Threshold
+### 7. Check If Above Threshold
 
 Checks if the calculated score is above a certain threshold. This endpoint might typically be used after submitting proof input and obtaining a proof to determine if the result meets a specific criterion.
 
 - Endpoint: /api/isAbove
 - Method: POST
 - Request (req):
+
   ```
   {
   "name": "<your name>",
@@ -249,6 +267,7 @@ Checks if the calculated score is above a certain threshold. This endpoint might
   }
 
   ```
+
 - CURL Example:
   ```bash
   curl -X POST http://localhost:3000/api/isAbove -H "Content-Type: application/json" -d '{"name":"<your name>", "totalScore": "<totalScore>", "totalEvaluater": "<totalEvaluater>", "lineNumber": "<lineNumber>"}'

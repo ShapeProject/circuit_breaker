@@ -1,4 +1,7 @@
+
 import  StarRating  from "@/components/fiveStarRating/fiveStarRating";
+import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
+import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreCircle from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
@@ -8,16 +11,27 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 export default function MyPage() {
+
   const [txCount, setTxCount] = useState(0);
   const [encrptedScore, setEncyrptedScore] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalScore, setToatalScore] = useState(0);
+  const [averageScore, setAverageScore] = useState(0);
 
   const account = useAccount();
+
+  const sampleValue = {
+    name: "mame3",
+    totalScore: "6372169231563658595",
+    totalEvaluater: "121016624988591087",
+  }
 
   useEffect(() => {
     /**
      * init method
      */
     const init = async () => {
+      setIsLoading(true);
       if (account.address != undefined) {
         // get encryptedScore
         const result = await readContract({
@@ -25,22 +39,27 @@ export default function MyPage() {
           abi: ScoreValutJson.abi,
           functionName: "getScore",
           args: [account.address]
-        });
+        }) as any;
         console.log("result:", result);
-        // get txCount
-        const res = await fetch('/api/getTxCount', {
-          method: 'POST', 
+        const encryptedScore = result[0];
+
+        const decRes = await fetch('/api/decrypt', {
+          method: 'POST',
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            address: account.address
+            name: sampleValue.name,
+            encNum: encryptedScore, 
           }),
         });
-        const data = await res.json();
-        console.log("Tx Count:", data.txCount);
-        setTxCount(data.txCount);
+        const decResJson = await decRes.json();
+        console.log("decResJson:", decResJson.decrypted);
+        setToatalScore(decResJson.decrypted);
+      
+        setTxCount(parseInt(result[2], 16));
       }
+      setIsLoading(false);
     }
     init();
   }, []);
@@ -49,35 +68,48 @@ export default function MyPage() {
     <div className="h-screen w-screen flex flex-row">
       <NavigationSidebar />
       <div className="h-full w-full flex flex-row px-10 justify-between">
-        <div className="h-full flex items-end">
-          <div className="w-fit h-fit rounded-t-2xl flex flex-col space-y-14 px-10 py-14 bg-white shadow-lg">
-            <h1 className="text-Title mx-auto">My Page</h1>
-            <div className="px-10 py-6 space-y-10">
-              <div className="space-y-6 flex flex-col">
-                <span className="text-BodyStrong text-Primary40">Total Score</span>
-                <span className="w-full text-BodyMono text-right">1,105</span>
-              </div>
-              <div className="space-y-6 flex flex-col">
-                <span className="text-BodyStrong text-Primary40">Received</span>
-                <span className="w-full text-BodyMono text-right">{txCount}</span>
+      {isLoading ? (
+          <div className="flex items-center justify-center h-screen">
+            <Loading/>
+          </div>
+        ) : (
+          <>
+            <div className="h-full w-full flex items-end">
+              <div className="w-fit h-fit rounded-t-2xl flex flex-col space-y-14 px-10 py-14 bg-white shadow-lg">
+                <h1 className="text-Title mx-auto">My Page</h1>
+                <div className="px-10 py-6 space-y-10">
+                  <div className="space-y-6 flex flex-col">
+                    <span className="text-BodyStrong text-Primary40">Total Score</span>
+                    <span className="w-full text-BodyMono text-right">{totalScore}</span>
+                  </div>
+                  <div className="space-y-6 flex flex-col">
+                    <span className="text-BodyStrong text-Primary40">Received</span>
+                    <span className="w-full text-BodyMono text-right">{txCount}</span>
+                  </div>
+                </div>
+                {txCount == 0 ? (
+                  <FiveStarRating
+                    value={0}
+                    count={5}
+                    size={40}
+                  />
+                ) : (
+                  <FiveStarRating
+                    value={(totalScore/txCount)/20}
+                    count={5}
+                    size={40}
+                  />
+                )}
               </div>
             </div>
-            <StarRating
-              rating={3.2}
-              maxStars={5}
-              size={40}
-            />
-          </div>
-        </div>
-
-        <div className=" h-full w-fit relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-          <ScoreCircle
-            score={68}
-            maxScore={100}
-          />
-        </div>
-
-
+            <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
+              <ScoreCircle 
+                total={totalScore}
+                count={txCount}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

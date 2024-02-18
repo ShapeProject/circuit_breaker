@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { writeFile } from 'fs/promises'
 
 function bigintToJson(key: any) {
     return JSON.stringify(key, (key, value) =>
@@ -38,7 +37,7 @@ export default async function handler(req: any, res: any) {
     const inputPath = path.join(process.cwd(), 'data', `${name}-input.json`);
 
     // Asynchronously write the keys to their respective files in JSON format.
-    await writeFile(inputPath, bigintToJson(responseObject), 'utf8');
+    // await writeFile(inputPath, bigintToJson(responseObject), 'utf8');
 
     // レスポンスを送信
     res.status(200).json(responseObject);

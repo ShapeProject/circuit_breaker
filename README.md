@@ -24,6 +24,10 @@
 
 Circuit ID: 96ddd389-8412-4fa1-9033-1c608bbde247
 
+## System Overview
+
+![](./pkgs/docs/img/System%20Configuration.png)
+
 ## How to work
 
 - setup `.env` & `.env.local`

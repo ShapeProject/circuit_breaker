@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { useAccount } from 'wagmi';
 
+import { Logomark } from '@/components/logoMark';
+
 export default function Login() {
   const [positionY, setPositionY] = useState([0, 0, 0, 0, 0]);
   const [styleId, setStyleId] = useState(["", "", "", "", ""]);
@@ -56,7 +58,7 @@ export default function Login() {
   }, [positionY, delay]);
 
   useEffect(() => {
-    if(account.address != undefined) {
+    if (account.address != undefined) {
       router.push('/my-page');
     }
   }, [account]);
@@ -64,41 +66,37 @@ export default function Login() {
   return (
     <div className="w-screen h-screen flex flex-row">
       <div className="w-full relative">
-        <div className="relative z-10 h-full px-20 py-10 flex flex-col justify-between">
+        <div className="relative z-10 h-full px-20 py-10 flex flex-col justify-between xs:px-6 xs:py-6">
           <div>
-            <a href="#" className="flex flex-row w-fit space-x-6 items-center">
-              <svg
-                className="h-10 w-10 fill-Primary10"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 40 40"
-              >
-                <use xlinkHref="/SymbolMark.svg#SymbolMark" />
-              </svg>
-              <span className="text-2xl font-semibold">Trusted Score</span>
-            </a>
+            <Logomark color='Primary10' />
           </div>
-          <div className="h-1/3 flex flex-col justify-between space-y-4">
+          <div className="h-1/3 flex flex-col justify-between space-y-4 xs:justify-center xs:place-items-center xs:text-center">
             <div>
-              <h1 className="text-6xl font-medium">Trusted Score</h1>
+              <h1 className="text-6xl lg:text-5xl xs:text-4xl">Trusted Score</h1>
             </div>
-            <div className="text-2xl font-normal">
+            <div className="text-2xl font-normal lg:text-base xs:text-sm">
               <div>Your personalized evaluation score.</div>
-              <div>And a score that shows how much you are trusted.</div>
+              <div>And a score that shows how <br className='hidden xs:block' />much you are trusted.</div>
             </div>
-            <div>
-              <button className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary50">
-                <div className="rounded-lg px-18 py-4 border border-transparent group-focus-visible:border-white">
-                  <span className="text-base font-semibold text-white">
-                    <ConnectButton />
-                  </span>
-                </div>
-              </button>
+            <div className='xs:w-full'>
+              <div
+              className='[&_button]:font-sans  [&_button]:bg-Primary10 [&_button]:hover:bg-Primary20 [&_button]:active:bg-Primary30 [&_button]:disabled:bg-Primary50 [&_button]:text-white [&_button]:rounded-lg 
+              w-fit xs:w-full 
+              [&_button]:text-ButtonLg xs:[&_button]:text-ButtonMd
+              [&_button]:py-[16px] [&_button]:px-18 
+              lg:[&_button]:py-[13px] lg:[&_button]:px-14 
+              xs:[&_button]:w-full'>
+                <ConnectButton />
+              </div>
+
             </div>
           </div>
-          <div className="flex flex-row space-x-6">
+
+          {/* Twitter,GitHub */}
+          <div className="flex flex-row space-x-10 lg:space-x-8 xs:justify-center">
             <a href="#" className="group">
               <svg
-                className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50"
+                className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50 lg:h-6 lg:w-6"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -108,7 +106,7 @@ export default function Login() {
 
             <a href="#" className="group">
               <svg
-                className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50"
+                className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50 lg:h-6 lg:w-6"
                 xmlns="http://www.w3.org.2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -126,9 +124,9 @@ export default function Login() {
         >
           <g filter="url(#filter0_di_349_929)">
             <path
+              className='stroke-[105.5px] lg:stroke-[70px]'
               d="M163.753 1275.75C22.9513 1007.88 54.9154 888.589 259.645 917.875C464.375 947.161 496.339 827.869 355.538 560C214.736 292.13 246.7 172.838 451.43 202.124C656.16 231.41 688.124 112.118 547.322 -155.751"
               stroke="#FBFBFB"
-              stroke-width="105.5"
             />
           </g>
           <defs>
@@ -194,7 +192,7 @@ export default function Login() {
         </svg>
       </div>
 
-      <div className="w-1/3 overflow-hidden relative bg-LoginGradient">
+      <div className="w-1/3 overflow-hidden relative bg-LoginGradient sm:hidden">
         <svg
           id="circle2"
           className="absolute right-0 left-0 top-0 w-[76%] aspect-square mx-auto"

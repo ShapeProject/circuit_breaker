@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import MyPageIcon from "@/components/Icons/MyPageIcon";
 import EvaluateIcon from "@/components/Icons/EvaluateIcon";
 import VerifyIcon from "@/components/Icons/VerifyIcon";
+import { Logomark } from "../logomark";
 
 export const NavigationSidebar = () => {
 
@@ -27,45 +28,27 @@ export const NavigationSidebar = () => {
     ];
 
     return (
-        <div className="h-full flex flex-col justify-center space-y-10 px-4 sticky top-0 bg-Primary10">
-            <div className="absolute top-6 left-6">
-                <div className="flex flex-row space-x-6 items-center">
-                    <svg
-                        className="h-6 w-6 fill-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 40 40"
-                    >
-                        <use xlinkHref="/SymbolMark.svg#SymbolMark" />
-                    </svg>
-                    <span className="text-xs font-semibold text-white">Trusted Score</span>
-                </div>
+        <div className="h-full w-[25%] max-w-[296px] md:max-w-none flex flex-col justify-center px-4 py-4 sticky top-0 bg-Primary10
+        md:h-fit md:w-full md:flex-row">
+            <div className="absolute top-4 left-4 md:hidden">
+                <Logomark color={"white"} />
             </div>
             {navContents.map((item) => (
-                <Link
+                <Link className={`group w-full my-5 flex rounded-lg lg:rounded md:my-0 md:mx-5 md:justify-center md:w-[111px]`}
                     key={item.name}
-                    href={item.href}
-                    className={`group flex rounded-lg`}
-                >
+                    href={item.href}>
                     <div
-                        className={`w-[264px] rounded-md px-2 py-1
-                                    bg-white ${pathname === item.href
-                                ? "bg-opacity-100"
+                        className={`w-full rounded-md px-2 py-1 bg-white lg:rounded lg:px-1 lg:py-0 sm:py-1
+                        ${pathname === item.href
+                                ? "bg-opacity-100 md:bg-opacity-0"
                                 : "bg-opacity-0 group-hover:bg-opacity-8 group-active:bg-opacity-24"
                             } `}
                     >
-                        <div className="flex flex-row items-center space-x-2">
-                            <div
-                                className={`p-2 ${pathname === item.href
-                                        ? "[&_path]:fill-Primary10"
-                                        : "[&_path]:fill-white"
-                                    } `}
-                            >
+                        <div className="flex flex-row items-center space-x-2 md:flex-col md:space-y-4">
+                            <div className={`p-2 md:p-1.5 rounded ${pathname === item.href ? "[&_path]:fill-Primary10 md:bg-white" : "[&_path]:fill-white"} `}>
                                 {item.icon}
                             </div>
-                            <span
-                                className={`font-sans font-semibold px-2 ${pathname === item.href ? "text-Primary10" : "text-white"
-                                    } `}
-                            >
+                            <span className={`font-sans px-2 ${pathname === item.href ? "text-Primary10 font-semibold md:text-white" : "text-white font-medium"} `}>
                                 {item.name}
                             </span>
                         </div>

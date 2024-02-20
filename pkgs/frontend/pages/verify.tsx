@@ -110,18 +110,18 @@ export default function Verify() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-row bg-white">
+    <div className="h-screen w-screen flex flex-row bg-white md:flex-col-reverse">
       <NavigationSidebar />
-      <div className="h-full w-full px-10 py-20 bg-white ">
+      <div className="h-full w-full p-20 bg-white md:p-10">
         {isLoading ? (
           <div className="flex items-center justify-center h-screen">
-            <Loading/>
+            <Loading />
           </div>
         ) : (
-          <div className="h-full w-full rounded-2xl flex flex-col justify-between py-20 text-center shadow-lg">
+          <div className="h-full w-full rounded-2xl flex flex-col justify-between place-items-center py-20 px-10 text-center shadow-lg sm:py-7 xs:px-4">
             <h1 className="text-Primary10 text-Title">Verification</h1>
 
-            <div className="w-fit m-auto space-y-24">
+            <div className="w-[45%] h-[30%] flex flex-col min-h-40 justify-between sm:w-full">
               <Input
                 labelText="Address"
                 id="Address"

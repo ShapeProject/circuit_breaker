@@ -32,33 +32,33 @@ const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div>
+    <div className="w-full">
       <label htmlFor={id}>
         <div
-          className={`w-fit rounded-2xl border-2 ${isInputFocused ? "border-Input30" : "border-transparent"
+          className={`rounded-2xl lg:rounded-lg border-2 ${isInputFocused ? "border-Input30" : "border-transparent"
             }`}
         >
           <div
-            className={`w-fit rounded-2xl px-8 py-4 border-2 ${isInputFocused
+            className={`rounded-2xl lg:rounded-lg px-8 py-4 border-2 lg:px-5 lg:py-3 xs:px-3 xs:py-1 ${isInputFocused
               ? "bg-white border-Input10"
               : "bg-Input30 border-transparent"
               }`}
           >
-            <div className="flex flex-row items-center space-x-2">
-              <div className="relative h-11 flex text-left">
+            <div className="flex flex-row items-center justify-between">
+              <div className="relative h-11 w-full flex text-left">
                 <span
                   className={`absolute ${isInputFocused 
-                    ? "-top-1 text-InputLabelFocus text-Input10"
+                    ? "-top-1 text-Input10 text-InputLabelFocusLg lg:text-InputLabelFocusMd xs:text-InputLabelFocusSm xs:top-1"
                     : inputValue
-                      ? "-top-1 text-InputLabelFocus text-Input20"
-                      : "top-1/2 -translate-y-1/2 text-InputLabel text-Input20"
+                      ? "-top-1 text-Input20 text-InputLabelFocusLg lg:text-InputLabelFocusMd xs:text-InputLabelFocusSm xs:top-1"
+                      : "top-1/2 -translate-y-1/2 text-Input20 text-InputLabelLg lg:text-InputLabelMd xs:text-InputLabelSm"
                     }`}
                 >
                   {labelText}
                 </span>
-                <div className="relative h-8 w-InputWidth">
+                <div className="relative h-8 w-full">
                   <input
-                    className={`w-full absolute -bottom-5 text-Input bg-transparent border-0 outline-0`}
+                    className={`w-full absolute -bottom-5 text-InputLg lg:text-InputMd xs:text-InputSm bg-transparent border-0 outline-0 xs:pb-2`}
                     id={id}
                     type={type}
                     autoCorrect={autoCorrect}
@@ -71,7 +71,7 @@ const Input: React.FC<InputProps> = ({
                   />
                 </div>
               </div>
-              <Icon name={icon} className={`${isInputFocused ? "fill-Primary10" : "fill-Input20"}`} />
+              <Icon name={icon} className={`ml-8 ${isInputFocused ? "fill-Primary10" : "fill-Input20"}`} />
             </div>
           </div>
         </div>

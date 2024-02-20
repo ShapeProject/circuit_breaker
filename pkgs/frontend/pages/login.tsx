@@ -60,7 +60,7 @@ export default function Login() {
   }, [positionY, delay]);
 
   useEffect(() => {
-    if(account.address != undefined) {
+    if (account.address != undefined) {
       router.push('/my-page');
     }
   }, [account]);
@@ -120,8 +120,7 @@ export default function Login() {
             </a>
           </div>
         </div>
-        <svg
-          className="absolute z-0 top-0 right-0 h-full w-auto"
+        <svg className="absolute z-0 top-0 right-0 h-full w-auto"
           viewBox="0 0 740 1080"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -197,11 +196,10 @@ export default function Login() {
       </div>
 
       <div className="h-full w-1/3 overflow-hidden relative bg-gradient-to-tl from-blue-400 to-pink-700">
-        
 
-        <svg
+        <svg className="absolute right-0 left-0 top-0 w-[76%] aspect-square mx-auto"
           id="circle2"
-          className="absolute right-0 left-0 top-0 w-[76%] aspect-square mx-auto"
+          
           width="466"
           height="466"
           viewBox="0 0 466 466"
@@ -230,10 +228,8 @@ export default function Login() {
             </linearGradient>
           </defs>
         </svg>
-
-        <svg
+        <svg className="absolute right-0 left-0 bottom-1/4 w-[69%] aspect-square mx-auto"
           id="circle3"
-          className="absolute right-0 left-0 bottom-1/4 w-[69%] aspect-square mx-auto"
           width="420"
           height="420"
           viewBox="0 0 420 420"
@@ -262,10 +258,8 @@ export default function Login() {
             </linearGradient>
           </defs>
         </svg>
-
-        <svg
+        <svg className="absolute right-0 left-0 -bottom-1/4 w-full aspect-square mx-auto"
           id="circle1"
-          className="absolute right-0 left-0 -bottom-1/4 w-full aspect-square mx-auto"
           width="610"
           height="610"
           viewBox="0 0 610 610"
@@ -294,10 +288,9 @@ export default function Login() {
             </linearGradient>
           </defs>
         </svg>
-
-        <svg
+        <svg className="absolute right-0 left-0 top-1/4 w-[29%] aspect-square mx-auto"
           id="circle4"
-          className="absolute right-0 left-0 top-1/4 w-[29%] aspect-square mx-auto"
+          
           width="176"
           height="176"
           viewBox="0 0 176 176"
@@ -330,10 +323,8 @@ export default function Login() {
             </linearGradient>
           </defs>
         </svg>
-
-        <svg
+        <svg className="absolute right-0 left-0 bottom-0 w-[28%] aspect-square mx-auto"
           id="circle5"
-          className="absolute right-0 left-0 bottom-0 w-[28%] aspect-square mx-auto"
           width="168"
           height="168"
           viewBox="0 0 168 168"
@@ -361,6 +352,7 @@ export default function Login() {
             </linearGradient>
           </defs>
         </svg>
+
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export default function Evaluate() {
   /**
    * setScore method
    */
-  const setScore = async() => {
+  const setScore = async () => {
     setIsLoading(true);
 
     try {
@@ -38,7 +38,7 @@ export default function Evaluate() {
       const domain = await forwarder.eip712Domain();
       // create encodedFunctionData
       // @ts-ignore
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[account.address, 4, "0xtesttest"])
+      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore", [account.address, 4, "0xtesttest"])
       // get unit48
       const uint48Time = getUint48();
       // create request data
@@ -49,10 +49,10 @@ export default function Evaluate() {
           chainId: 534351, // scroll sepolia
           verifyingContract: domain[4] as any
         },
-        types: { 
-          'ForwardRequest': ForwardRequest 
+        types: {
+          'ForwardRequest': ForwardRequest
         },
-        primaryType:'ForwardRequest',
+        primaryType: 'ForwardRequest',
         message: {
           from: account.address,
           to: SCOREVAULT_CONTRACT_ADDRESS,
@@ -65,9 +65,9 @@ export default function Evaluate() {
       });
       // call requestRelayer API 
       const gaslessResult = await fetch('/api/requestRelayer', {
-        method: 'POST', 
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           from: account.address,
@@ -92,7 +92,7 @@ export default function Evaluate() {
         progress: undefined,
         theme: "colored",
       });
-    } catch(err: any) {
+    } catch (err: any) {
       console.error("err:", err);
       toast.error('Failed....', {
         position: "top-right",
@@ -113,13 +113,13 @@ export default function Evaluate() {
     /**
      * init method
      */
-    const init = async() => {
-      if(account.address != undefined) {
+    const init = async () => {
+      if (account.address != undefined) {
         // get txCount
         const res = await fetch('/api/getTxCount', {
-          method: 'POST', 
+          method: 'POST',
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             address: account.address
@@ -134,18 +134,18 @@ export default function Evaluate() {
   }, []);
 
   return (
-    <div className="h-screen w-screen flex flex-row bg-white">
+    <div className="h-screen w-screen flex flex-row bg-white md:flex-col-reverse">
       <NavigationSidebar />
-      <div className="h-full w-full px-10 py-20 bg-white ">
-       {isLoading ? (
+      <div className="h-full w-full p-20 bg-white md:p-10">
+        {isLoading ? (
           <div className="flex items-center justify-center h-screen">
-            <Loading/>
+            <Loading />
           </div>
         ) : (
-          <div className="h-full w-full rounded-2xl flex flex-col justify-between py-20 text-center shadow-lg">
-            <>
+          <div className="h-full w-full rounded-2xl flex flex-col justify-between place-items-center py-20 px-10 text-center shadow-lg sm:py-7 xs:px-4">
               <h1 className="text-Primary10 text-Title">Send an evaluate</h1>
-              <div className="w-fit m-auto space-y-24">
+
+              <div className="w-[45%] h-[30%] flex flex-col min-h-40 justify-between sm:w-full">
                 <Input
                   labelText="Address"
                   id="Address"
@@ -165,18 +165,16 @@ export default function Evaluate() {
                   icon="ScoreIcon"
                 />
               </div>
-
               <div>
-                <button 
+                <button
                   className="group rounded-lg bg-Primary10 border-2 border-transparent hover:bg-Primary20 active:bg-Primary30 focus-visible:border-black disabled:bg-Primary50"
-                  onClick={async() => { await setScore() }}
+                  onClick={async () => { await setScore() }}
                 >
                   <div className="rounded-lg px-18 py-4 border border-transparent group-focus-visible:border-white">
                     <span className="text-Button text-white">Send</span>
                   </div>
                 </button>
               </div>
-            </>
           </div>
         )}
       </div>

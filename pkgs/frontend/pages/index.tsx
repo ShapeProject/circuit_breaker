@@ -2,8 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { useAccount } from 'wagmi';
-
-import { Logomark } from '@/components/logoMark';
+import { Logomark } from '@/components/logomark';
 
 export default function Login() {
   const [positionY, setPositionY] = useState([0, 0, 0, 0, 0]);
@@ -94,7 +93,7 @@ export default function Login() {
 
           {/* Twitter,GitHub */}
           <div className="flex flex-row space-x-10 lg:space-x-8 xs:justify-center">
-            <a href="#" className="group">
+            <a href="https://twitter.com/Shape_ProjectJa" target='_blank' className="group">
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50 lg:h-6 lg:w-6"
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +103,11 @@ export default function Login() {
               </svg>
             </a>
 
-            <a href="#" className="group">
+            <a 
+              href="https://github.com/ShapeProject/circuit_breaker" 
+              target="_blank"
+              className="group"
+            >
               <svg
                 className="h-10 w-10 fill-Primary10 group-hover:fill-Primary20 group-active:fill-Primary30 group-disabled:fill-Primary50 lg:h-6 lg:w-6"
                 xmlns="http://www.w3.org.2000/svg"

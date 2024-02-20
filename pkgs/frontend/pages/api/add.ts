@@ -10,6 +10,7 @@ export default async function add(req: NextApiRequest, res: NextApiResponse) {
         try {
             // Extract the encrypted numbers and the user's name from the request body.
             const { encNum1, encNum2, name } = req.body;
+            console.log("add body", req.body)
             const c1 = BigInt(encNum1); // Convert the first encrypted number to BigInt.
             const c2 = BigInt(encNum2); // Convert the second encrypted number to BigInt.
             

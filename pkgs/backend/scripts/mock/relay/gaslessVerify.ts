@@ -116,7 +116,7 @@ async function main() {
   // get Forwarder contract address
   const FORWARDER_CONTRACT_ADDRESS = "0x3140a4156db3A4077c41C2Bcb22cC02Ba407f0B5";
   // get ScoreValut Contract address
-  const SCOREVAULT_CONTRACT_ADDRESS = "0x0d5D749BEbB9521c9604727aB22091a924b4aDd4";
+  const SCOREVAULT_CONTRACT_ADDRESS = "0xF09d5a398239b32071c33945bFcdA29BCb0B842A";
 
   const ozSigner: any = await getRelayer();
   const forwarder = await ethers.getContractAt('ScoreVaultForwarder', FORWARDER_CONTRACT_ADDRESS, ozSigner);

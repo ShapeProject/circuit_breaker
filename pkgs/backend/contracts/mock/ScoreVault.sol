@@ -11,14 +11,15 @@ contract ScoreVault is ERC2771Context {
 
   // Score struct
   struct Score {
-    uint256 count;
+    string encryptedCount;
     string encryptedData;
   }
 
   mapping(address => Score) public scores;
+  mapping(address => uint256) public setCount;
 
   // Event
-  event UpdateScore(address msgSender, uint256 count, string encryptedData);
+  event UpdateScore(address msgSender, string encryptedCount, string encryptedData, uint256 newCount);
   event Verify(address msgSender, bool result);
 
   /**
@@ -36,18 +37,38 @@ contract ScoreVault is ERC2771Context {
    */
   function setScore(
     address _to,
-    uint256 _count, 
+    string memory _encryptedCount,
     string memory _encryptedData)
   external {
-    scores[_to] = Score(_count, _encryptedData);
-    emit UpdateScore(_to, _count, _encryptedData);
+    scores[_to] = Score(_encryptedCount, _encryptedData);
+    // increment setCount
+    uint256 currentCount = setCount[_to];
+    uint256 newCount = currentCount + 1;
+    // update setCount
+    setCount[_to] = newCount;
+
+    emit UpdateScore(_to, _encryptedCount, _encryptedData, newCount);
   }
 
   /**
    * getScore method
    */
-  function getScore(address _address) external view returns (uint256, string memory) {
-    return (scores[_address].count, scores[_address].encryptedData);
+  function getScore(
+    address _address
+  ) 
+    external 
+    view 
+    returns 
+  (
+    string memory, 
+    string memory, 
+    uint256
+  ) {
+    return (
+      scores[_address].encryptedCount, 
+      scores[_address].encryptedData, 
+      setCount[_address]
+    );
   }
 
   /**

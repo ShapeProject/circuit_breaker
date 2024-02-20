@@ -10,6 +10,7 @@ export default async function encrypt(req: NextApiRequest, res: NextApiResponse)
         try {
             // Extract the number to be encrypted and the user's name from the request body.
             const { num, name } = req.body;
+            console.log("encrypt body", req.body)
             const m = BigInt(num);
   
             // Construct the file path for the public key based on the user's name.

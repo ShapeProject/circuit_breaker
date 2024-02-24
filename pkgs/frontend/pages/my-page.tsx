@@ -94,8 +94,8 @@ export default function MyPage() {
                   />
                 ) : (
                   <FiveStarRating
-                  maxStars={5}
-                  rating={(totalScore/txCount)/20}
+                    maxStars={5}
+                    rating={(totalScore/txCount)/20}
                     size={40}
                   />
                 )}

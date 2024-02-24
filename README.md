@@ -1,10 +1,16 @@
 # circuit_breaker
 
+<div align="center">
+  <img src="./pkgs/docs/img/CoverImage_01_2024.02.18.jpg"/>
+</div>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/98251463-ba7b-4c62-aef5-4d32331d7bd4/deploy-status)](https://app.netlify.com/sites/glittering-trifle-3243ed/deploys)
+
 ## Deployed Contracts Info
 
 | Conract Name | Address                                                                                                                         | Network        |
 | :----------- | :------------------------------------------------------------------------------------------------------------------------------ | :------------- |
-| ScoreValut   | [0x505869E3B5Ef52a5Db123387fe2d188c44b27b25](https://sepolia.scrollscan.dev/address/0x505869E3B5Ef52a5Db123387fe2d188c44b27b25) | Scroll Sepolia |
+| ScoreValut   | [0x177acf501eF7d2b090d94fd3bd2BE773736598E1](https://sepolia.scrollscan.dev/address/0x177acf501eF7d2b090d94fd3bd2BE773736598E1) | Scroll Sepolia |
 | Forwarder    | [0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5](https://sepolia.scrollscan.dev/address/0x3140a4156db3a4077c41c2bcb22cc02ba407f0b5) | Scroll Sepolia |
 | Verifier     | [0x819cb57caEee4d4D10Dd583ffAe5DF4094EBb069](https://sepolia.scrollscan.dev/address/0x819cb57caeee4d4d10dd583ffae5df4094ebb069) | Scroll Sepolia |
 
@@ -17,6 +23,10 @@
 ## Created Ciruit
 
 Circuit ID: 96ddd389-8412-4fa1-9033-1c608bbde247
+
+## System Overview
+
+![](./pkgs/docs/img/System%20Configuration.png)
 
 ## How to work
 
@@ -272,6 +282,14 @@ Checks if the calculated score is above a certain threshold. This endpoint might
   ```
 
 These additions provide a comprehensive overview of the backend APIs, including operations for generating key pairs, encrypting numbers, adding encrypted numbers, decrypting numbers, and interacting with proofs. Remember to replace <your name>, <totalScore>, <totalEvaluater>, <lineNumber>, and <proof_id> placeholders with actual values relevant to your use case.
+
+## ScreenShots
+
+![](./pkgs/docs/img/screen1.png);
+![](./pkgs/docs/img/screen2.png);
+![](./pkgs/docs/img/screen3.png);
+![](./pkgs/docs/img/screen4.png);
+![](./pkgs/docs/img/screen5.png);
 
 ### References
 

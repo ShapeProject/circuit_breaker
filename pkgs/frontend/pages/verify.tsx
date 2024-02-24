@@ -1,29 +1,18 @@
 import Input from "@/components/input/input";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import ScoreValutForwarderJson from "@/contracts/mock/ScoreValutForwarder.sol/ScoreVaultForwarder.json";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
-import { useEthersSigner } from "@/hooks/useEthersProvider";
-import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
-import { getUint48 } from "@/utils/getUint48";
-import { ForwardRequest } from "@/utils/types";
-import { Contract } from "ethers";
+import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
+import { readContract } from "@wagmi/core";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAccount, useSignTypedData } from "wagmi";
-import { readContract } from "@wagmi/core"
 
 export default function Verify() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const account = useAccount();
-  const { signTypedDataAsync } = useSignTypedData();
-  // get Signer Instance
-  const signer: any = useEthersSigner();
   const [score, setScore] = useState('');
   const [to, setTo] = useState('');
-  console.log("score:", score);
 
   /**
    * verify method
@@ -49,6 +38,7 @@ export default function Verify() {
         totalEvaluater: "121016624988591087",
         lineNumber: "10",
       };
+      console.log("score:", score);
       const response = await fetch('/api/isAbove', {
         method: 'POST',
         headers: {
@@ -57,8 +47,8 @@ export default function Verify() {
         body: JSON.stringify({
           name: sampleValue.name,
           totalScore: encryptedTotalScore,
-          totalEvaluater: "4982023261627043412",
-          // totalEvaluater: encryptedCount,
+          // totalEvaluater: "4982023261627043412",
+          totalEvaluater: encryptedCount,
           lineNumber: score,
         }),
       });
@@ -134,7 +124,7 @@ export default function Verify() {
                 autoComplete="off"
                 icon="AddressIcon"
                 value={to}
-                onChange={(e) => setTo(e.target.value)}
+                onChange={setTo}
               />
               <Input
                 labelText="Score"
@@ -145,7 +135,7 @@ export default function Verify() {
                 autoComplete="off"
                 icon="ScoreIcon"
                 value={score}
-                onChange={(e) => setScore(e.target.value)}
+                onChange={setScore}
               />
             </div>
             <div>

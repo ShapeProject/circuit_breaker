@@ -1,7 +1,8 @@
-import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
+
+import FiveStarRating from "@/components/fiveStarRating/fiveStarRating";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import { ScoreCircle } from "@/components/scoreCircle";
+import ScoreCircle from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
@@ -14,6 +15,7 @@ export default function MyPage() {
   const [encrptedScore, setEncyrptedScore] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [totalScore, setToatalScore] = useState(0);
+  const [averageScore, setAverageScore] = useState(0);
 
   const account = useAccount();
 
@@ -84,22 +86,36 @@ export default function MyPage() {
                     <span className="w-full text-BodyMono text-right">{txCount}</span>
                   </div>
                 </div>
-                <FiveStarRating
-                  value={txCount}
-                  count={5}
-                  size={40}
-                />
+                {txCount == 0 ? (
+                  <FiveStarRating
+                    maxStars={5}
+                    rating={0}
+                    size={40}
+                  />
+                ) : (
+                  <FiveStarRating
+                  maxStars={5}
+                  rating={(totalScore/txCount)/20}
+                    size={40}
+                  />
+                )}
               </div>
             </div>
             <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-              <ScoreCircle 
-                total={totalScore}
-                count={txCount}
-              />
+              {txCount == 0 ? (
+                <ScoreCircle 
+                  score={0}
+                  maxScore={0}
+                />
+              ) : (
+                <ScoreCircle 
+                  score={(totalScore/txCount)}
+                  maxScore={totalScore}
+                />
+              )}
             </div>
           </>
         )}
-        
       </div>
     </div>
   );

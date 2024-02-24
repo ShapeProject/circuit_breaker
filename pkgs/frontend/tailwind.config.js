@@ -54,7 +54,7 @@ module.exports = {
         "InputLabelFocus": ['0.9rem', {
           fontWeight: '400',
         }],
-        "AvgScore": ['8rem', {
+        "AvgScore": ['6rem', {
           fontWeight: '500',
         }],
       },

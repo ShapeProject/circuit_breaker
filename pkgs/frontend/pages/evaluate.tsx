@@ -7,6 +7,7 @@ import { useEthersSigner } from "@/hooks/useEthersProvider";
 import { FORWARDER_CONTRACT_ADDRESS, SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { getUint48 } from "@/utils/getUint48";
 import { ForwardRequest } from "@/utils/types";
+import { validateInputNumber, validateVerifyInputAddress } from "@/utils/validate";
 import { readContract } from "@wagmi/core";
 import { Contract } from "ethers";
 import { useEffect, useState } from "react";
@@ -40,161 +41,199 @@ export default function Evaluate() {
   const setScore = async() => {
     setIsLoading(true);
     try {
-      // create forwarder contract instance
-      const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
-      // create ScoreValut contract instance
-      const scoreVault: any = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
-      // get domain
-      const domain = await forwarder.eip712Domain();
-      // console.log("domain:", domain);
-      // create encodedFunctionData
-      // @ts-ignore
-      console.log("暗号化前plainScore:", plainScore);
-      console.log("暗号化前plainScore.toString():", typeof(plainScore.toString()));
-      const encRes = await fetch('/api/encrypt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: sampleValue.name,
-          num: plainScore.toString(), 
-        }),
-      });
-      const encResJson = await encRes.json();
-      console.log("sampleValue.name:", sampleValue.name);
-      console.log("encRes:", encResJson.encrypted);
-      setEncryptedScore(encResJson.encrypted);
-  
-      const getScoreRes = await readContract({
-        address: SCOREVAULT_CONTRACT_ADDRESS,
-        abi: ScoreValutJson.abi,
-        functionName: "getScore",
-        args: [to]
-      }) as any;
-      console.log("getScoreRes:", getScoreRes[0]);
-      const currentScore = getScoreRes[0];
-      
-      const count = getScoreRes[2] ?? 0;
+      // validate input number
+      const result = validateInputNumber(plainScore);
 
-      const encCountRes = await fetch('/api/encrypt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: sampleValue.name,
-          num: count.toString(), 
-        }),
-      });
-      const encCountResJson = await encCountRes.json();
-      console.log("encRes:", encCountResJson.encrypted);
-      const encryptedCount = encCountResJson.encrypted;
-
-
-
-      console.log("currentScore:", currentScore);
-      let updateEncryptedScore;
-
-      // currentScoreが空文字か0の場合、別の処理を実行
-      if (currentScore === '' || currentScore === '0') {
-        console.log("スコアは未設定または0です。別の処理を実行");
-        // const encFirstRes = await fetch('/api/encrypt', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({
-        //     name: sampleValue.name,
-        //     num: encResJson.encrypted.toString(), 
-        //   }),
-        // });
-        // const encFirstResJson = await encFirstRes.json();
-        // console.log("encRes:", encFirstResJson.encrypted);
-        updateEncryptedScore = encResJson.encrypted;
+      if(result == 1) {
+        toast.error('Please Enter Number', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else if(result == 2) {
+        toast.error('Please Enter 0~99', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else if(!validateVerifyInputAddress(to)) {
+        toast.error('Please valid address', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       } else {
-        console.log(`現在のスコアは${currentScore}です。`);
-        console.log("currentScore:", currentScore);
-        console.log("encryptedScore:", encryptedScore);
-        const addRes = await fetch('/api/add', {
+        // create forwarder contract instance
+        const forwarder: any = (new Contract(FORWARDER_CONTRACT_ADDRESS, ScoreValutForwarderJson.abi, signer)) as any;
+        // create ScoreValut contract instance
+        const scoreVault: any = (new Contract(SCOREVAULT_CONTRACT_ADDRESS, ScoreValutJson.abi, signer)) as any;
+        // get domain
+        const domain = await forwarder.eip712Domain();
+        // console.log("domain:", domain);
+        // create encodedFunctionData
+        // @ts-ignore
+        console.log("暗号化前plainScore:", plainScore);
+        console.log("暗号化前plainScore.toString():", typeof(plainScore.toString()));
+        const encRes = await fetch('/api/encrypt', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             name: sampleValue.name,
-            encNum1: encResJson.encrypted.toString(),
-            encNum2: currentScore.toString(),
+            num: plainScore.toString(), 
           }),
         });
-        const addResJson = await addRes.json();
-        console.log("addResJson:", addResJson);
-        console.log("addRes:", addResJson.encryptedSum);
-        updateEncryptedScore = addResJson.encryptedSum;
+        const encResJson = await encRes.json();
+        console.log("sampleValue.name:", sampleValue.name);
+        console.log("encRes:", encResJson.encrypted);
+        setEncryptedScore(encResJson.encrypted);
     
-        // if (!response.ok) {
-        //   throw new Error('Network response was not ok');
-        // }
+        const getScoreRes = await readContract({
+          address: SCOREVAULT_CONTRACT_ADDRESS,
+          abi: ScoreValutJson.abi,
+          functionName: "getScore",
+          args: [to]
+        }) as any;
+        console.log("getScoreRes:", getScoreRes[0]);
+        const currentScore = getScoreRes[0];
+        
+        const count = getScoreRes[2] ?? 0;
+
+        const encCountRes = await fetch('/api/encrypt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            num: count.toString(), 
+          }),
+        });
+        const encCountResJson = await encCountRes.json();
+        console.log("encRes:", encCountResJson.encrypted);
+        const encryptedCount = encCountResJson.encrypted;
+
+
+
+        console.log("currentScore:", currentScore);
+        let updateEncryptedScore;
+
+        // currentScoreが空文字か0の場合、別の処理を実行
+        if (currentScore === '' || currentScore === '0') {
+          console.log("スコアは未設定または0です。別の処理を実行");
+          // const encFirstRes = await fetch('/api/encrypt', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //   },
+          //   body: JSON.stringify({
+          //     name: sampleValue.name,
+          //     num: encResJson.encrypted.toString(), 
+          //   }),
+          // });
+          // const encFirstResJson = await encFirstRes.json();
+          // console.log("encRes:", encFirstResJson.encrypted);
+          updateEncryptedScore = encResJson.encrypted;
+        } else {
+          console.log(`現在のスコアは${currentScore}です。`);
+          console.log("currentScore:", currentScore);
+          console.log("encryptedScore:", encryptedScore);
+          const addRes = await fetch('/api/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: sampleValue.name,
+              encNum1: encResJson.encrypted.toString(),
+              encNum2: currentScore.toString(),
+            }),
+          });
+          const addResJson = await addRes.json();
+          console.log("addResJson:", addResJson);
+          console.log("addRes:", addResJson.encryptedSum);
+          updateEncryptedScore = addResJson.encryptedSum;
+      
+          // if (!response.ok) {
+          //   throw new Error('Network response was not ok');
+          // }
+        }
+
+        console.log("updateEncryptedScore:", updateEncryptedScore);
+
+
+        // 1. number of encripted evaluater, 2 encripted evaluater
+        const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, updateEncryptedScore, encryptedCount])
+        // get unit48
+        const uint48Time = getUint48();
+        // create request data
+        const sig = await signTypedDataAsync({
+          domain: {
+            name: domain[1],
+            version: domain[2],
+            chainId: 534351, // scroll sepolia
+            verifyingContract: domain[4] as any
+          },
+          types: { 
+            'ForwardRequest': ForwardRequest 
+          },
+          primaryType:'ForwardRequest',
+          message: {
+            from: account.address,
+            to: SCOREVAULT_CONTRACT_ADDRESS,
+            value: 0,
+            gas: 360000,
+            nonce: await forwarder.nonces(account.address!),
+            deadline: uint48Time,
+            data: encodedData
+          },
+        });
+        // call requestRelayer API 
+        const gaslessResult = await fetch('/api/requestRelayer', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify({
+            from: account.address,
+            to: SCOREVAULT_CONTRACT_ADDRESS,
+            value: 0,
+            gas: 360000,
+            nonce: (await forwarder.nonces(account.address!)).toString(),
+            deadline: uint48Time.toString(),
+            data: encodedData,
+            signature: sig
+          }),
+        });
+
+        console.log(await gaslessResult.json());
+        toast.success('🦄 Success!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
-
-      console.log("updateEncryptedScore:", updateEncryptedScore);
-
-
-      // 1. number of encripted evaluater, 2 encripted evaluater
-      const encodedData: any = scoreVault.interface.encodeFunctionData("setScore",[to, updateEncryptedScore, encryptedCount])
-      // get unit48
-      const uint48Time = getUint48();
-      // create request data
-      const sig = await signTypedDataAsync({
-        domain: {
-          name: domain[1],
-          version: domain[2],
-          chainId: 534351, // scroll sepolia
-          verifyingContract: domain[4] as any
-        },
-        types: { 
-          'ForwardRequest': ForwardRequest 
-        },
-        primaryType:'ForwardRequest',
-        message: {
-          from: account.address,
-          to: SCOREVAULT_CONTRACT_ADDRESS,
-          value: 0,
-          gas: 360000,
-          nonce: await forwarder.nonces(account.address!),
-          deadline: uint48Time,
-          data: encodedData
-        },
-      });
-      // call requestRelayer API 
-      const gaslessResult = await fetch('/api/requestRelayer', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({
-          from: account.address,
-          to: SCOREVAULT_CONTRACT_ADDRESS,
-          value: 0,
-          gas: 360000,
-          nonce: (await forwarder.nonces(account.address!)).toString(),
-          deadline: uint48Time.toString(),
-          data: encodedData,
-          signature: sig
-        }),
-      });
-
-      console.log(await gaslessResult.json());
-      toast.success('🦄 Success!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
     } catch(err: any) {
       console.error("err:", err);
       toast.error('Failed....', {

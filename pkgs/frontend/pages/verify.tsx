@@ -3,6 +3,7 @@ import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
+import { validateVerifyInputAddress, validateVerifyInputNubmer } from "@/utils/validate";
 import { readContract } from "@wagmi/core";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,49 +21,22 @@ export default function Verify() {
   const verify = async() => {
     setIsLoading(true);
     try {
+      // validate input number
+      const checkResult = validateVerifyInputNubmer(score);
 
-      const resRead = await readContract({
-        address: SCOREVAULT_CONTRACT_ADDRESS,
-        abi: ScoreValutJson.abi,
-        functionName: "getScore",
-        args: [to]
-      }) as any;
-      console.log("result:", resRead);
-      const encryptedTotalScore = resRead[0];
-      const encryptedCount = resRead[1];
-      console.log("encryptedTotalScore:", encryptedTotalScore);
-       
-      const sampleValue = {
-        name: "alpha-key",
-        totalScore: "6372169231563658595",
-        totalEvaluater: "121016624988591087",
-        lineNumber: "10",
-      };
-      console.log("score:", score);
-      const response = await fetch('/api/isAbove', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: sampleValue.name,
-          totalScore: encryptedTotalScore,
-          // totalEvaluater: "4982023261627043412",
-          totalEvaluater: encryptedCount,
-          lineNumber: score,
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const result = await response.json();
-      console.log(result); // ここで取得した結果を使用する
-      // 例: 結果に応じてUIを更新
-      if (result.isAbove) {
-        console.log("結果は上です。");
-        toast.success('🦄 Above the Score!', {
+      if(checkResult == 1) {
+        toast.error('Please Enter Number', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else if(!validateVerifyInputAddress(to)) {
+        toast.error('Please valid address', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -73,17 +47,70 @@ export default function Verify() {
           theme: "colored",
         });
       } else {
-        console.log("結果は下または同等です。");
-        toast.success('🦄 Under the score...', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+        const resRead = await readContract({
+          address: SCOREVAULT_CONTRACT_ADDRESS,
+          abi: ScoreValutJson.abi,
+          functionName: "getScore",
+          args: [to]
+        }) as any;
+        console.log("result:", resRead);
+        const encryptedTotalScore = resRead[0];
+        const encryptedCount = resRead[1];
+        console.log("encryptedTotalScore:", encryptedTotalScore);
+         
+        const sampleValue = {
+          name: "alpha-key",
+          totalScore: "6372169231563658595",
+          totalEvaluater: "121016624988591087",
+          lineNumber: "10",
+        };
+        console.log("score:", score);
+        const response = await fetch('/api/isAbove', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: sampleValue.name,
+            totalScore: encryptedTotalScore,
+            // totalEvaluater: "4982023261627043412",
+            totalEvaluater: encryptedCount,
+            lineNumber: score,
+          }),
         });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const result = await response.json();
+        console.log(result); // ここで取得した結果を使用する
+        // 例: 結果に応じてUIを更新
+        if (result.isAbove) {
+          console.log("結果は上です。");
+          toast.success('🦄 Above the Score!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          console.log("結果は下または同等です。");
+          toast.success('🦄 Under the score...', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       }
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);

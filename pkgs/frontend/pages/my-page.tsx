@@ -20,7 +20,7 @@ export default function MyPage() {
   const account = useAccount();
 
   const sampleValue = {
-    name: "mame3",
+    name: "alpha-key",
     totalScore: "6372169231563658595",
     totalEvaluater: "121016624988591087",
   }

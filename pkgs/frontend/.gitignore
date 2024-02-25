@@ -35,5 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# pillier keys
-# /data 
+# paillier keys
+/data

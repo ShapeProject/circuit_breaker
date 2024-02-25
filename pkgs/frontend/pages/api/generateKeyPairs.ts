@@ -1,5 +1,6 @@
 // pages/api/encrypt.js
 import { writeFile } from 'fs/promises';
+import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as paillierBigint from 'paillier-bigint';
 import path from 'path';
@@ -28,13 +29,20 @@ export default async function generateKeyPairs(req: NextApiRequest, res: NextApi
             // it's recommended to handle key generation and storage in a separate, secure process.
             const { publicKey, privateKey } = await paillierBigint.generateRandomKeys(keyLength);
 
+            // 鍵のローカル保存
             // Define file paths for saving the public and private keys.
             const pubKeyPath = path.join(process.cwd(), 'data', `${name}-publicKey.json`);
             const priKeyPath = path.join(process.cwd(), 'data', `${name}-privateKey.json`);
-
             // Asynchronously write the keys to their respective files in JSON format.
             await writeFile(pubKeyPath, bigintToJson(publicKey), 'utf8');
             await writeFile(priKeyPath, bigintToJson(privateKey), 'utf8');
+
+            // 鍵のAWS保存
+            const keyRes = await axios.post(`${process.env.BACKEND_API_URL}/saveKey`, {
+                name,
+                key: bigintToJson(privateKey),
+              });
+              console.log("keyRes", keyRes)
 
             // Respond with a success message once keys are generated and saved.
             res.status(200).json({

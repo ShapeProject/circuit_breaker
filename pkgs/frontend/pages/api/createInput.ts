@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { writeFile } from 'fs/promises'
+import axios from 'axios'
 
 function bigintToJson(key: any) {
     return JSON.stringify(key, (key, value) =>
@@ -12,17 +14,28 @@ export default async function handler(req: any, res: any) {
     // クライアントからのデータを取得
     const { totalScore, totalEvaluater, lineNumber, name } = req.body;
 
-    // private.json と public.json のパスを取得
-    const priKeyPath = path.join(process.cwd(), 'data', `${name}-privateKey.json`);
-    const pubKeyPath = path.join(process.cwd(), 'data', `${name}-publicKey.json`);
+    // // ローカル取得
+    // // private.json と public.json のパスを取得
+    // const priKeyPath = path.join(process.cwd(), 'data', `${name}-privateKey.json`);
+    // const pubKeyPath = path.join(process.cwd(), 'data', `${name}-publicKey.json`);
+    // // ファイルからデータを読み込む
+    // const privateKeyData = JSON.parse(fs.readFileSync(priKeyPath, 'utf8'));
+    // const publicKeyData = JSON.parse(fs.readFileSync(pubKeyPath, 'utf8'));
+    // // 必要なデータを抽出
+    // const { lambda: decriptionKeyLambda, mu: decriptionKeyMu } = privateKeyData;
+    // const { n: encryptionKeyN } = publicKeyData;
 
-    // ファイルからデータを読み込む
-    const privateKeyData = JSON.parse(fs.readFileSync(priKeyPath, 'utf8'));
-    const publicKeyData = JSON.parse(fs.readFileSync(pubKeyPath, 'utf8'));
+    // aws取得
+    const getKeyRes = await axios.post(`${process.env.BACKEND_API_URL}/getKey`, {
+      name
+    });
+    console.log("keyRes", getKeyRes.data);
+    const privateKeyData = JSON.parse(getKeyRes.data);
+    console.log("privateKeyData",privateKeyData);
 
-    // 必要なデータを抽出
-    const { lambda: decriptionKeyLambda, mu: decriptionKeyMu } = privateKeyData;
-    const { n: encryptionKeyN } = publicKeyData;
+    const { lambda: decriptionKeyLambda, mu: decriptionKeyMu, publicKey:publicKey } = privateKeyData;
+    const { n: encryptionKeyN } = publicKey;
+
 
     // レスポンスとして返すJSONオブジェクトを作成
     const responseObject = {
@@ -37,7 +50,7 @@ export default async function handler(req: any, res: any) {
     const inputPath = path.join(process.cwd(), 'data', `${name}-input.json`);
 
     // Asynchronously write the keys to their respective files in JSON format.
-    // await writeFile(inputPath, bigintToJson(responseObject), 'utf8');
+    await writeFile(inputPath, bigintToJson(responseObject), 'utf8');
 
     // レスポンスを送信
     res.status(200).json(responseObject);

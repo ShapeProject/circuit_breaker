@@ -15,7 +15,7 @@ export const NavigationSidebar = () => {
             icon: <MyPageIcon />,
         },
         {
-            name: "Send an evaluation",
+            name: "Evaluation",
             href: "/evaluate",
             icon: <EvaluateIcon />,
         },

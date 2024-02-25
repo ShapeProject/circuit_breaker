@@ -1,7 +1,8 @@
-import { FiveStarRating } from "@/components/fiveStarRating/fiveStarRating";
+
+import FiveStarRating from "@/components/fiveStarRating/fiveStarRating";
 import Loading from "@/components/loading";
 import { NavigationSidebar } from "@/components/navigation/navigationSidebar";
-import { ScoreCircle } from "@/components/scoreCircle";
+import ScoreCircle from "@/components/scoreCircle";
 import ScoreValutJson from "@/contracts/mock/ScoreVault.sol/ScoreVault.json";
 import { SCOREVAULT_CONTRACT_ADDRESS } from "@/utils/contants";
 import { readContract } from "@wagmi/core";
@@ -13,8 +14,16 @@ export default function MyPage() {
   const [txCount, setTxCount] = useState(0);
   const [encrptedScore, setEncyrptedScore] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [totalScore, setToatalScore] = useState(0);
+  const [averageScore, setAverageScore] = useState(0);
 
   const account = useAccount();
+
+  const sampleValue = {
+    name: "alpha-key",
+    totalScore: "6372169231563658595",
+    totalEvaluater: "121016624988591087",
+  }
 
   useEffect(() => {
     /**
@@ -29,21 +38,25 @@ export default function MyPage() {
           abi: ScoreValutJson.abi,
           functionName: "getScore",
           args: [account.address]
-        });
+        }) as any;
         console.log("result:", result);
-        // get txCount
-        const res = await fetch('/api/getTxCount', {
-          method: 'POST', 
+        const encryptedScore = result[0];
+
+        const decRes = await fetch('/api/decrypt', {
+          method: 'POST',
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            address: account.address
+            name: sampleValue.name,
+            encNum: encryptedScore, 
           }),
         });
-        const data = await res.json();
-        console.log("Tx Count:", data.txCount);
-        setTxCount(data.txCount);
+        const decResJson = await decRes.json();
+        console.log("decResJson:", decResJson.decrypted);
+        setToatalScore(decResJson.decrypted);
+      
+        setTxCount(parseInt(result[2], 16));
       }
       setIsLoading(false);
     }
@@ -66,26 +79,43 @@ export default function MyPage() {
                 <div className="px-10 py-6 space-y-10">
                   <div className="space-y-6 flex flex-col">
                     <span className="text-BodyStrong text-Primary40">Total Score</span>
-                    <span className="w-full text-BodyMono text-right">1,105</span>
+                    <span className="w-full text-BodyMono text-right">{totalScore}</span>
                   </div>
                   <div className="space-y-6 flex flex-col">
                     <span className="text-BodyStrong text-Primary40">Received</span>
                     <span className="w-full text-BodyMono text-right">{txCount}</span>
                   </div>
                 </div>
-                <FiveStarRating
-                  value={4.1}
-                  count={txCount}
-                  size={40}
-                />
+                {txCount == 0 ? (
+                  <FiveStarRating
+                    maxStars={5}
+                    rating={0}
+                    size={40}
+                  />
+                ) : (
+                  <FiveStarRating
+                    maxStars={5}
+                    rating={(totalScore/txCount)/20}
+                    size={40}
+                  />
+                )}
               </div>
             </div>
             <div className="relative p-10 [&_div]:flex [&_div]:justify-center [&_div]:items-center">
-              <ScoreCircle />
+              {txCount == 0 ? (
+                <ScoreCircle 
+                  score={0}
+                  maxScore={0}
+                />
+              ) : (
+                <ScoreCircle 
+                  score={(totalScore/txCount)}
+                  maxScore={totalScore}
+                />
+              )}
             </div>
           </>
         )}
-        
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export default function Evaluate() {
   console.log("to:", to);
   console.log("plainScore:", plainScore);
   const sampleValue = {
-    name: "mame4",
+    name: "alpha-key",
     totalScore: "6372169231563658595",
     totalEvaluater: "121016624988591087",
   }

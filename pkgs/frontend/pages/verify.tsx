@@ -33,7 +33,7 @@ export default function Verify() {
       console.log("encryptedTotalScore:", encryptedTotalScore);
        
       const sampleValue = {
-        name: "mame4",
+        name: "alpha-key",
         totalScore: "6372169231563658595",
         totalEvaluater: "121016624988591087",
         lineNumber: "10",

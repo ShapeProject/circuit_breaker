@@ -11,32 +11,33 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const kms = new AWS.KMS();
 
 export default async function saveKey(req: any, res: any) {
-    if (req.method === 'POST') {
-        try {
-            const { key, name } = req.body;
-            const keyBuffer = Buffer.from(JSON.stringify(key));
-            const encryptedKey = await kms.encrypt({
-                KeyId: 'alias/alpha-score-key', // KMSキーのエイリアス、ARN、またはIDを指定
-                Plaintext: keyBuffer,
-            }).promise();
+  if (req.method === 'POST') {
+    try {
+      const { key, name } = req.body;
+      const keyBuffer = Buffer.from(JSON.stringify(key));
+      const encryptedKey = await kms
+        .encrypt({
+          KeyId: 'alias/alpha-score-key', // KMSキーのエイリアス、ARN、またはIDを指定
+          Plaintext: keyBuffer,
+        })
+        .promise();
 
-            const params = {
-                TableName: 'alpha-scoreDB',
-                Item: {
-                name: name,
-                encryptedData: encryptedKey.CiphertextBlob.toString('base64'),
-                },
-            };
+      const params = {
+        TableName: 'alpha-scoreDB',
+        Item: {
+          name: name,
+          encryptedData: encryptedKey.CiphertextBlob.toString('base64'),
+        },
+      };
 
-            await dynamoDb.put(params).promise();
-            console.log('Data saved successfully.');
-            res.status(200).json({data: "ok"})
-        } catch (error: any) {
-            res.status(403).json({ error: 'Forbidden', details: error.message });
-        }
-    } else {
-        res.setHeader('Allow', ['POST']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+      await dynamoDb.put(params).promise();
+      console.log('Data saved successfully.');
+      res.status(200).json({ data: 'ok' });
+    } catch (error: any) {
+      res.status(403).json({ error: 'Forbidden', details: error.message });
     }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 }
-

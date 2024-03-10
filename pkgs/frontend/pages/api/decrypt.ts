@@ -11,6 +11,8 @@ export default async function decrypt(req: NextApiRequest, res: NextApiResponse)
         try {
             // Extract the encrypted number and the user's name from the request body.
             const { encNum, name } = req.body;
+            console.log("encNum", encNum);
+            console.log("name", name);
             const encrypted = BigInt(encNum);
   
             // // ローカル取得
@@ -60,6 +62,7 @@ export default async function decrypt(req: NextApiRequest, res: NextApiResponse)
   
             // Decrypt the encrypted number using the private key.
             const decrypted = privateKey.decrypt(encrypted);
+            console.log("decrypted", decrypted);
       
             // Respond with the decrypted number.
             res.status(200).json({

@@ -2,10 +2,15 @@
 const AWS = require('aws-sdk');
 // import jwt from 'jsonwebtoken'; // JWTを使用する場合
 
+// AWS.config.update({
+//   accessKeyId: process.env.ACCESS_ID,
+//   secretAccessKey: process.env.SECRET_ID,
+//   region: process.env.REGION_ID,
+// });
 AWS.config.update({
-  accessKeyId: process.env.ACCESS_ID,
-  secretAccessKey: process.env.SECRET_ID,
-  region: process.env.REGION_ID,
+  accessKeyId: "AKIA5FTZBAB6FGUQZOHG",
+  secretAccessKey: "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",
+  region: "ap-northeast-1",
 });
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();

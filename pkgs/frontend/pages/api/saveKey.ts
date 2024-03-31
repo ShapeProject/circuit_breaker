@@ -2,9 +2,9 @@ const AWS = require('aws-sdk');
 
 // AWSの認証情報を設定
 AWS.config.update({
-  accessKeyId: process.env.NEXT_ACCESS_ID,
-  secretAccessKey: process.env.NEXT_SECRET_ID,
-  region: process.env.NEXT_REGION_ID,
+  accessKeyId: process.env.ACCESS_ID,
+  secretAccessKey: process.env.SECRET_ID,
+  region: process.env.REGION_ID,
 });
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();

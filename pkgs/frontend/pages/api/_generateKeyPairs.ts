@@ -38,7 +38,7 @@ export default async function generateKeyPairs(req: NextApiRequest, res: NextApi
             await writeFile(priKeyPath, bigintToJson(privateKey), 'utf8');
 
             // 鍵のAWS保存
-            const keyRes = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/saveKey`, {
+            const keyRes = await axios.post(`${process.env.BACKEND_API_URL}/saveKey`, {
                 name,
                 key: bigintToJson(privateKey),
               });

@@ -14,6 +14,8 @@ export default async function decrypt(req: NextApiRequest, res: NextApiResponse)
             console.log("encNum", encNum);
             console.log("name", name);
             const encrypted = BigInt(encNum);
+            console.log("process.env.BACKEND_API_URL", process.env.BACKEND_API_URL)
+            console.log("process.env.REGION_ID", process.env.REGION_ID)
   
             // // ローカル取得
             // // Construct the file paths for the private and public keys based on the user's name.

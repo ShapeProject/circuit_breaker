@@ -1,0 +1,10 @@
+// 通常のコンパイルオプションがpreserveのため、テスト時のみreact-jsxに変更する
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["@testing-library/jest-dom"]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/.keep"],
+  "exclude": ["node_modules"]
+}

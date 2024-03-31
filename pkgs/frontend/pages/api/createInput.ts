@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
     // const { n: encryptionKeyN } = publicKeyData;
 
     // aws取得
-    const getKeyRes = await axios.post(`${process.env.BACKEND_API_URL}/getKey`, {
+    const getKeyRes = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/getKey`, {
       name
     });
     console.log("keyRes", getKeyRes.data);

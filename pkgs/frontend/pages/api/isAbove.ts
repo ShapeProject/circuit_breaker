@@ -10,7 +10,7 @@ export default async function handler(req: any, res: any) {
     console.log("circuit_id: ", circuit_id)
     // input.jsonの動的な取得
     const { totalScore, totalEvaluater, lineNumber, name} = req.body;
-    const createInputResponse = await axios.post(`${process.env.BACKEND_API_URL}/createInput`, {
+    const createInputResponse = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/createInput`, {
       name,
       totalScore,
       totalEvaluater,
@@ -48,7 +48,7 @@ export default async function handler(req: any, res: any) {
       const proofId = response.data.proof_id;
       console.log("proofId: ", proofId)
       
-      const proofDetailResponse = await axios.post(`${process.env.BACKEND_API_URL}/getProofDetail`, { proof_id: proofId });
+      const proofDetailResponse = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/getProofDetail`, { proof_id: proofId });
       console.log("proofDetailResponse: ", proofDetailResponse.data)
       const output = proofDetailResponse.data.public ? proofDetailResponse.data.public[0] : null;
       console.log("output: ", output)

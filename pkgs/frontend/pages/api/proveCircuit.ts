@@ -11,7 +11,7 @@ export default async function handler(req: any, res: any) {
 
     // input.jsonの動的な取得
     const { totalScore, totalEvaluater, lineNumber, name} = req.body;
-    const createInputResponse = await axios.post(`${process.env.BACKEND_API_URL}/createInput`, {
+    const createInputResponse = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/createInput`, {
       name,
       totalScore,
       totalEvaluater,

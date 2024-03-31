@@ -29,7 +29,7 @@ export default async function add(req: NextApiRequest, res: NextApiResponse) {
             // );
 
             // aws取得
-            const getKeyRes = await axios.post(`${process.env.BACKEND_API_URL}/getKey`, {
+            const getKeyRes = await axios.post(`${process.env.NEXT_BACKEND_API_URL}/getKey`, {
                 name
             });
             console.log("keyRes", getKeyRes.data);

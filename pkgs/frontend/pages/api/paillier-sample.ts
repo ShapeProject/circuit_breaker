@@ -20,16 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const m2 = BigInt(number2);
 
       // Paillier鍵ペアの生成
-      // const { publicKey, privateKey } = await paillierBigint.generateRandomKeys(2048);
       const { publicKey, privateKey } = await paillierBigint.generateRandomKeys(128);
-      
-      console.log('# private_key  ');
-      console.log(JSON.stringify(privateKey, bigintReplacer, 2));
-      console.log('\n');
-
-      console.log('#  public_key  ');
-      console.log(JSON.stringify(publicKey, bigintReplacer, 2));
-      console.log('\n')
       
       // 数値の暗号化
       const c1 = publicKey.encrypt(m1);
@@ -37,11 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // 暗号化された数値の準同型加算
       const encryptedSum = publicKey.addition(c1, c2);
-      console.log(encryptedSum.toString());
-      console.log('\n')
 
       // 復号化
-      console.log('# decrypted m1+m2  ')
       const lambda = privateKey.lambda;
       const n = publicKey.n;
       const nn = publicKey._n2;

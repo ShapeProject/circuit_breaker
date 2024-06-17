@@ -17,10 +17,6 @@ export default async function handler(
   if (body === undefined) {
     return res.status(403).json({error: "Request has no body"});
   }
-  console.log("body:", body);
-
-  const totalScore = body.totalScore;
-  const totalEvaluater = body.totalEvaluater;
   
   // convert
   const solidityCallData = await generateProof(350, 6);

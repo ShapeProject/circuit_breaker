@@ -1,9 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export default async function handler(req: any, res: any) {
   if (req.method === 'POST') {
     const { proof_id } = req.body;
-
     const config = {
       method: 'get',
       url: `${process.env.SINDRI_API_ENDPOINT}/proof/${proof_id}/detail`,
@@ -15,12 +14,12 @@ export default async function handler(req: any, res: any) {
 
     try {
       await axios(config);
-      // res.status(200).json(response.data);
       let statusCheckResponse;
       let attempts = 0;
       const maxAttempts = 20; // 最大試行回数
       do {
         await new Promise(resolve => setTimeout(resolve, 5000)); // 5秒待機
+        console.log('Checking proof status...')
         statusCheckResponse = await axios.get(`${process.env.SINDRI_API_ENDPOINT}/proof/${proof_id}/detail`, {
           headers: {
             'Accept': 'application/json',
@@ -36,8 +35,8 @@ export default async function handler(req: any, res: any) {
         res.status(408).json({ message: 'Proof processing timed out or failed.' });
       }
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'An error occurred while getting the proof detail.' });
+      const axiosError = error as AxiosError;
+      res.status(500).json({ message: `An error occurred while getting the proof detail. ${axiosError}` });
     }
   } else {
     res.setHeader('Allow', ['GET']);

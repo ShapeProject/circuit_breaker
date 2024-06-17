@@ -35,7 +35,7 @@ export default async function add(req: NextApiRequest, res: NextApiResponse) {
             console.log("keyRes", getKeyRes.data);
             const privateKeyData = JSON.parse(getKeyRes.data);
             console.log("privateKeyData",privateKeyData);
-        
+ 
             const { lambda: decriptionKeyLambda, mu: decriptionKeyMu, publicKey:pubKey } = privateKeyData;
 
             const publicKey = new paillierBigint.PublicKey(

@@ -20,11 +20,6 @@ export default async function handler(req: any, res: any) {
     const proofInputJson = createInputResponse.data;
     const proofInput = JSON.stringify(proofInputJson);
 
-    // input.jsonの静的な取得
-    // const { name } = req.body;
-    // const inputPath = path.join(process.cwd(), 'data', `${name}-input.json`);
-    // const proofInput = await readFile(inputPath, 'utf8');
-
     // qsを使用してproof_inputを文字列に変換
     const data = qs.stringify({
       'proof_input': proofInput

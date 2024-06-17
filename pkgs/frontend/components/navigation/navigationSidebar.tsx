@@ -1,11 +1,23 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MyPageIcon from "@/components/Icons/MyPageIcon";
 import EvaluateIcon from "@/components/Icons/EvaluateIcon";
 import VerifyIcon from "@/components/Icons/VerifyIcon";
+import { useAccount } from "wagmi";
 
 export const NavigationSidebar = () => {
+
+    const [shortAddress, setShortAddress] = useState("");
+    const account = useAccount();
+    useEffect(() => {
+        if (account.address) {
+            const short_address = `${account.address.slice(0, 5)}...${account.address.slice(-3)}`;
+            setShortAddress(short_address);
+            console.log("short_address:", short_address);
+        }
+    }, [account.address]);
 
     const pathname = usePathname();
     const navContents = [
@@ -29,15 +41,21 @@ export const NavigationSidebar = () => {
     return (
         <div className="h-full flex flex-col justify-center space-y-10 px-4 sticky top-0 bg-Primary10">
             <div className="absolute top-6 left-6">
-                <div className="flex flex-row space-x-6 items-center">
-                    <svg
-                        className="h-6 w-6 fill-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 40 40"
-                    >
-                        <use xlinkHref="/SymbolMark.svg#SymbolMark" />
-                    </svg>
-                    <span className="text-xs font-semibold text-white">Trusted Score</span>
+                <div className="flex flex-col space-y-4">
+                    <div className="flex flex-row space-x-6 items-center">
+                        <svg
+                            className="h-6 w-6 fill-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 40 40"
+                        >
+                            <use xlinkHref="/SymbolMark.svg#SymbolMark" />
+                        </svg>
+                        <span className="text-xs font-semibold text-white">Trusted Score</span>
+                    </div>
+                    <div className="flex flex-row space-x-6 items-center">
+                        <span className="text-xs font-semibold text-white">Logged in as</span>
+                        <span className="text-xs font-semibold text-white">{shortAddress}</span>
+                    </div>
                 </div>
             </div>
             {navContents.map((item) => (

@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 import MyPageIcon from "@/components/Icons/MyPageIcon";
 import EvaluateIcon from "@/components/Icons/EvaluateIcon";
 import VerifyIcon from "@/components/Icons/VerifyIcon";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
 export const NavigationSidebar = () => {
 
     const [shortAddress, setShortAddress] = useState("");
     const account = useAccount();
+    const { disconnect } = useDisconnect();
+
     useEffect(() => {
         if (account.address) {
             const short_address = `${account.address.slice(0, 5)}...${account.address.slice(-3)}`;
@@ -21,6 +23,12 @@ export const NavigationSidebar = () => {
 
     const pathname = usePathname();
     const navContents = [
+        {
+            name: "Change account",
+            href: "/",
+            action: () => disconnect(),
+            // icon: ,
+        },
         {
             name: "My page",
             href: "/my-page",
@@ -56,12 +64,15 @@ export const NavigationSidebar = () => {
                         <span className="text-xs font-semibold text-white">Logged in as</span>
                         <span className="text-xs font-semibold text-white">{shortAddress}</span>
                     </div>
+                    <div className="flex flex-row space-x-6 items-center">
+                    </div>
                 </div>
             </div>
             {navContents.map((item) => (
                 <Link
                     key={item.name}
                     href={item.href}
+                    onClick={item.action ? item.action : undefined}
                     className={`group flex rounded-lg`}
                 >
                     <div

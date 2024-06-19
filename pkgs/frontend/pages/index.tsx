@@ -56,10 +56,11 @@ export default function Login() {
   }, [positionY, delay]);
 
   useEffect(() => {
-    if(account.address != undefined) {
+    if (account.address) {
       router.push('/my-page');
     }
-  }, [account]);
+  }, [account.address, router]);
+
 
   return (
     <div className="w-screen h-screen flex flex-row">

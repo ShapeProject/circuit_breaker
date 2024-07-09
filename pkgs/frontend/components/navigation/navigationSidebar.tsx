@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MyPageIcon from "@/components/Icons/MyPageIcon";
 import EvaluateIcon from "@/components/Icons/EvaluateIcon";
 import VerifyIcon from "@/components/Icons/VerifyIcon";
@@ -12,6 +12,7 @@ export const NavigationSidebar = () => {
     const [shortAddress, setShortAddress] = useState("");
     const account = useAccount();
     const { disconnect } = useDisconnect();
+    const router = useRouter();
 
     useEffect(() => {
         if (account.address) {
@@ -23,12 +24,6 @@ export const NavigationSidebar = () => {
 
     const pathname = usePathname();
     const navContents = [
-        {
-            name: "Change account",
-            href: "/",
-            action: () => disconnect(),
-            // icon: ,
-        },
         {
             name: "My page",
             href: "/my-page",
@@ -45,6 +40,11 @@ export const NavigationSidebar = () => {
             icon: <VerifyIcon />,
         },
     ];
+
+    const handleChangeAccount = () => {
+        disconnect();
+        router.push("/");
+    };
 
     return (
         <div className="h-full flex flex-col justify-center space-y-10 px-4 sticky top-0 bg-Primary10">
@@ -65,6 +65,12 @@ export const NavigationSidebar = () => {
                         <span className="text-xs font-semibold text-white">{shortAddress}</span>
                     </div>
                     <div className="flex flex-row space-x-6 items-center">
+                        <button
+                            onClick={handleChangeAccount}
+                            className="text-xs font-semibold text-white underline"
+                        >
+                            Change account
+                        </button>
                     </div>
                 </div>
             </div>
@@ -72,7 +78,6 @@ export const NavigationSidebar = () => {
                 <Link
                     key={item.name}
                     href={item.href}
-                    onClick={item.action ? item.action : undefined}
                     className={`group flex rounded-lg`}
                 >
                     <div
